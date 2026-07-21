@@ -1,13 +1,11 @@
-import { supabase } from '$lib/supabase';
+import { getSession } from '$lib/auth';
 
-export const ssr = false; // Turn off SSR momentarily for rapid MVP auth tracking
+export const ssr = false;
 
-// /** @type {import('./$types').LayoutLoad} */
 export async function load() {
-    // Safely check if a user session is active on initialization
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    return {
-        session
-    };
+  const session = await getSession();
+
+  return {
+    session
+  };
 }
