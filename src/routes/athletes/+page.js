@@ -1,4 +1,3 @@
-import { getSession } from '$lib/auth';
 import { fromTable, runSupabaseQuery } from '$lib/supabaseData';
 
 /**
@@ -6,8 +5,6 @@ import { fromTable, runSupabaseQuery } from '$lib/supabaseData';
  * @returns {Promise<{ athletes: any[] }>}
  */
 export async function load() {
-    // Resolve the current session through the shared helper so this route stays aligned with the rest of the app.
-    await getSession();
 
     const athletes = await runSupabaseQuery(
         fromTable('leaderboard').order('total_points', { ascending: false }),

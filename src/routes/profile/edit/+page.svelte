@@ -70,18 +70,7 @@
             <p class="text-sm text-zinc-500 mt-1">Manage your public athletic directory presence.</p>
         </div>
 
-<<<<<<< Updated upstream
-        {#if data.onboarding}
-            <div class="bg-zinc-900 text-white p-4 rounded-lg">
-                <p class="text-sm font-medium">Welcome aboard — complete your profile so your athlete record is ready for the league.</p>
-            </div>
-        {/if}
-
-        <div class="bg-zinc-100 border border-zinc-200 p-4 rounded-lg">
-=======
-		<div class="bg-zinc-100 border border-zinc-200 p-4 rounded-lg">
->>>>>>> Stashed changes
-            <h3 class="text-xs font-semibold text-zinc-400 tracking-wider uppercase mb-3">Verified League Achievements</h3>
+        <div class="bg-zinc-100 border border-zinc-200 p-4 rounded-lg">            <h3 class="text-xs font-semibold text-zinc-400 tracking-wider uppercase mb-3">Verified League Achievements</h3>
             {#if data.profile?.achievements && data.profile.achievements.length > 0}
                 <div class="flex flex-wrap gap-2">
                     {#each data.profile.achievements as achievement}

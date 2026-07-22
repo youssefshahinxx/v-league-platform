@@ -7,7 +7,7 @@ import { error } from '@sveltejs/kit';
  * @param {{ params: { id: string } }} props
  */
 export async function load({ params }) {
-    await getSession();
+    // await getSession();
 
     const profileId = params.id;
 
