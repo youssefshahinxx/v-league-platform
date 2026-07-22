@@ -53,8 +53,13 @@
 			if (currentMode === 'register') {
 				// Sign-up flow: use a fully qualified redirect URL so Supabase can resolve it reliably.
 				const redirectTo = typeof window !== 'undefined'
+<<<<<<< Updated upstream
 					? new URL('/profile/edit?onboarding=true', window.location.origin).toString()
 					: '/profile/edit?onboarding=true';
+=======
+					? new URL('/profile/edit', window.location.origin).toString()
+					: '/profile/edit';
+>>>>>>> Stashed changes
 
 				const profileValues = buildProfilePayload();
 				const { data, error } = await supabase.auth.signUp({
@@ -74,8 +79,13 @@
 				}
 
 				if (data.session) {
+<<<<<<< Updated upstream
 					// New users with an active session can be sent straight to the profile editor.
 					await goto('/profile/edit?onboarding=true');
+=======
+					// New users with an active session are sent straight to the profile editor.
+					await goto('/profile/edit');
+>>>>>>> Stashed changes
 				} else {
 					// Some Supabase setups require email confirmation before the session is available.
 					errorMessage = 'Please check your inbox and confirm your email before signing in.';

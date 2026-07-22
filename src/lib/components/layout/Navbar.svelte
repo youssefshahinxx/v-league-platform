@@ -1,4 +1,10 @@
 <script lang="ts">
+<<<<<<< Updated upstream
+=======
+	import { goto } from '$app/navigation';
+	import { supabase } from '$lib/supabase';
+
+>>>>>>> Stashed changes
 	// Props using Svelte 5 runes with default values
 	let { isLoggedIn = false } = $props();
 
@@ -15,6 +21,14 @@
 	function toggleMobileMenu() {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	}
+<<<<<<< Updated upstream
+=======
+
+	async function handleLogout() {
+		await supabase.auth.signOut();
+		await goto('/');
+	}
+>>>>>>> Stashed changes
 </script>
 
 <!-- Outer Container matching max content width from style.md -->
@@ -67,6 +81,7 @@
 				>
 					Profile
 				</a>
+<<<<<<< Updated upstream
 				<form action="/auth/logout" method="POST" class="inline-block">
 					<button 
 						type="submit" 
@@ -75,6 +90,15 @@
 						Sign Out
 					</button>
 				</form>
+=======
+				<button 
+					type="button"
+					onclick={handleLogout}
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 focus:ring-2 focus:ring-[#dc2626] focus:outline-none transition-all duration-200 ease-in-out cursor-pointer"
+				>
+					Sign Out
+				</button>
+>>>>>>> Stashed changes
 			{/if}
 		</div>
 
@@ -142,6 +166,7 @@
 						>
 							Profile
 						</a>
+<<<<<<< Updated upstream
 						<form action="/auth/logout" method="POST" class="w-full">
 							<button 
 								type="submit" 
@@ -150,6 +175,15 @@
 								Sign Out
 							</button>
 						</form>
+=======
+						<button 
+							type="button"
+							onclick={handleLogout}
+							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 focus:ring-2 focus:ring-[#dc2626] focus:outline-none transition-all duration-200 ease-in-out cursor-pointer"
+						>
+							Sign Out
+						</button>
+>>>>>>> Stashed changes
 					</div>
 				{/if}
 			</div>
