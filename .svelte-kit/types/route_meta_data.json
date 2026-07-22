@@ -1,0 +1,46 @@
+{
+	"/": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/admin": [
+		"src/routes/admin/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/athletes": [
+		"src/routes/athletes/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/athletes/[id]": [
+		"src/routes/athletes/[id]/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/auth": [
+		"src/routes/+layout.js"
+	],
+	"/auth/logout": [
+		"src/routes/auth/logout/+server.js"
+	],
+	"/blog": [
+		"src/routes/+layout.js"
+	],
+	"/blog/[slug]": [
+		"src/routes/+layout.js"
+	],
+	"/competitions": [
+		"src/routes/competitions/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/competitions/[id]": [
+		"src/routes/competitions/[id]/+page.server.js",
+		"src/routes/+layout.js"
+	],
+	"/profile/edit": [
+		"src/routes/profile/edit/+page.server.js",
+		"src/routes/+layout.js"
+	],
+	"/ranking": [
+		"src/routes/ranking/+page.js",
+		"src/routes/+layout.js"
+	]
+}
