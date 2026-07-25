@@ -8,7 +8,6 @@
             <a href="/ranking" class="hover:text-zinc-900 transition-colors">Global Rankings</a>
             <a href="/athletes" class="hover:text-zinc-900 transition-colors">Athletes</a>
             <a href="/competitions" class="hover:text-zinc-900 transition-colors">Events</a>
-            <a href="/admin" class="hover:text-zinc-900 transition-colors">League Admin</a>
         </div>
         <div class="mt-8 md:order-1 md:mt-0">
             <p class="text-center text-xs leading-5 text-zinc-500">

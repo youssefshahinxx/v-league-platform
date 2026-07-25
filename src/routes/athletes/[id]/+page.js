@@ -1,4 +1,3 @@
-import { getSession } from '$lib/auth';
 import { fromTable, runSupabaseQuery } from '$lib/supabaseData';
 import { error } from '@sveltejs/kit';
 
@@ -7,13 +6,13 @@ import { error } from '@sveltejs/kit';
  * @param {{ params: { id: string } }} props
  */
 export async function load({ params }) {
-    // await getSession();
+
 
     const profileId = params.id;
 
     // 1. Fetch the core public profile data.
     const athlete = await runSupabaseQuery(
-        fromTable('profiles', 'id, full_name, nationality, gender, club, bio, achievements')
+        fromTable('profiles', 'id, full_name, nationality, gender, club, bio, achievements, avatar_url')
             .eq('id', profileId)
             .single(),
         null,

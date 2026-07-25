@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabase';
+import { goto } from '$app/navigation';
 import { redirect } from '@sveltejs/kit';
 
 /**
@@ -37,3 +38,8 @@ export async function requireAuth() {
 
     return session;
 }
+
+export async function handleLogout() {
+		await supabase.auth.signOut();
+		await goto("/");
+	}

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
-	import { supabase } from "$lib/supabase";
+	import { handleLogout } from "$lib/auth.js";
 	// Props using Svelte 5 runes with default values
 	let { isLoggedIn = false } = $props();
 
@@ -18,10 +17,6 @@
 		isMobileMenuOpen = !isMobileMenuOpen;
 	}
 
-	async function handleLogout() {
-		await supabase.auth.signOut();
-		await goto("/");
-	}
 </script>
 
 <!-- Outer Container matching max content width from style.md -->

@@ -9,6 +9,7 @@ import { supabase } from '$lib/supabase';
  * @returns {Promise<{ success: boolean, message: string }>}
  */
 export async function registerForCompetition(competitionId, userId) {
+    
     const { error } = await supabase
         .from('registrations')
         .insert({
@@ -25,6 +26,6 @@ export async function registerForCompetition(competitionId, userId) {
 
     return {
         success: false,
-        message: 'Registration processing failed. Please check your account privileges.'
+        message: error?.message || 'Registration processing failed. Please check your account privileges.'
     };
 }

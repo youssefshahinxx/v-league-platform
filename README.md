@@ -452,3 +452,11 @@ v-league/
             +page.js
             +page.svelte
 ```
+Okay good, I want you to rethink about the server side and client-side. as server-side is better for fast initial loads and search engine optimization (SEO), while client-side is better for rich user interactivity and app-like responsiveness. ensure that server side and client-side, are well in the app.  this because I want to make the app clean, and matching. remove an wanted or unused things example "/auth/logout fallback" as now navbar handle logout. so look at the whole app from your own side thinking and optimize and organize, if needed.
+
+Also new things to do after: 
+1. I want to continue building the landing page @src/routes/+page.svelte. I want you to continue building new sections at this page at your own, by your own thinking. 
+2. I want to make a logout button in the @src/routes/profile/edit/+page.svelte beside the save profile button. 
+3. Admin page is just for admins, I don't want the normal signed in user to access this page. admins will only able to add competitions. so remove the admin page entirely.  
+4. this is a fix I want to do, when user first sign up. when i attempt to sign up and then after confirming email and everything done right. the bio i have written while sign up, does not saved in the db in supabase or even shown at the profile.
+5. also another fix is that also an error message appears in the authform after clicking create account, saying the New row conflict with the RLC policies defined with the public.profile table. 

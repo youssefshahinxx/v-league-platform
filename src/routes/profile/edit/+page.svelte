@@ -1,4 +1,5 @@
 <script>
+    import { handleLogout } from '$lib/auth';
     import { supabase } from '$lib/supabase';
 
     // Svelte 5 Runes: Destructure loaded database profile data cleanly
@@ -12,6 +13,9 @@
     let dob = $state('');
     let club = $state('');
     let bio = $state('');
+    let avatarUrl = $state('');
+    /** @type {File | null} */
+    let selectedFile = $state(null);
 
     // System Feedback Statuses
     let isSaving = $state(false);
@@ -25,7 +29,34 @@
         dob = profile?.dob ?? '';
         club = profile?.club ?? '';
         bio = profile?.bio ?? '';
+        avatarUrl = profile?.avatar_url ?? '';
     });
+
+    /** @param {Event} e */
+    function handleFileSelect(e) {
+        const input = /** @type {HTMLInputElement} */ (e.target);
+        if (input.files && input.files.length > 0) {
+            selectedFile = input.files[0];
+            avatarUrl = URL.createObjectURL(input.files[0]);
+        }
+    }
+
+    /**
+     * @param {{ user: { id: string } }} session
+     */
+    async function uploadAvatar(session) {
+        if (!selectedFile) return null;
+        const ext = selectedFile.name.split('.').pop();
+        const filePath = `${session.user.id}/avatar.${ext}`;
+        const { error: uploadError } = await supabase.storage
+            .from('avatars')
+            .upload(filePath, selectedFile, { upsert: true });
+        if (uploadError) throw uploadError;
+        const { data: publicUrlData } = supabase.storage
+            .from('avatars')
+            .getPublicUrl(filePath);
+        return publicUrlData?.publicUrl || null;
+    }
 
     /** @param {Event} e */
     async function updateProfile(e) {
@@ -40,24 +71,33 @@
             isSaving = false;
             return;
         }
-        
-        const { error } = await supabase
-            .from('profiles')
-            .update({
-                full_name: fullName,
-                nationality: nationality.toUpperCase(),
-                gender,
-                dob: dob || null, // Ensure empty date picks submit safely as null
-                club,
-                bio
-            })
-            .eq('id', session.user.id);
 
-        isSaving = false;
-        if (!error) {
+        try {
+            let newAvatarUrl = avatarUrl;
+            if (selectedFile) {
+                newAvatarUrl = await uploadAvatar(session) || avatarUrl;
+                selectedFile = null;
+            }
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({
+                    full_name: fullName,
+                    nationality: nationality.toUpperCase(),
+                    gender,
+                    dob: dob || null,
+                    club,
+                    bio,
+                    avatar_url: newAvatarUrl
+                })
+                .eq('id', session.user.id);
+
+            if (error) throw error;
             message = 'Profile successfully updated.';
-        } else {
-            message = 'Error updating profile data.';
+        } catch (err) {
+            message = /** @type {Error} */ (err)?.message || 'Error updating profile data.';
+        } finally {
+            isSaving = false;
         }
     }
 </script>
@@ -92,6 +132,27 @@
                 {message}
             </div>
         {/if}
+
+        <!-- Avatar Upload -->
+        <div class="flex items-center gap-4 pb-4 border-b border-zinc-100">
+            <div class="w-16 h-16 rounded-full overflow-hidden bg-zinc-100 border border-zinc-200 flex-shrink-0">
+                {#if avatarUrl}
+                    <img src={avatarUrl} alt="Profile avatar" class="w-full h-full object-cover" />
+                {:else}
+                    <div class="w-full h-full flex items-center justify-center text-zinc-400">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                    </div>
+                {/if}
+            </div>
+            <label class="cursor-pointer">
+                <span class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-zinc-700 bg-white border border-zinc-300 rounded-md hover:bg-zinc-50 transition-colors">
+                    Change Photo
+                </span>
+                <input type="file" accept="image/*" class="hidden" onchange={handleFileSelect} />
+            </label>
+        </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1.5">
@@ -130,10 +191,17 @@
             </div>
         </div>
 
-        <div class="flex justify-end pt-4 border-t border-zinc-100">
+        <div class="flex justify-start gap-2 pt-4 border-t border-zinc-100">
             <button type="submit" disabled={isSaving} class="px-5 py-2 bg-zinc-900 text-white rounded-md text-sm font-medium hover:bg-zinc-800 disabled:bg-zinc-400 transition">
                 {isSaving ? 'Saving Changes...' : 'Save Profile'}
             </button>
+            <button
+					type="button"
+					onclick={handleLogout}
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 focus:ring-2 focus:ring-[#dc2626] focus:outline-none transition-all duration-200 ease-in-out cursor-pointer"
+				>
+					Sign Out
+				</button>
         </div>
     </form>
 </div>

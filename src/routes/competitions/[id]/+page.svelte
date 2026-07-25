@@ -4,7 +4,8 @@
     import { formatCompetitionDateLong } from '$lib/utils/ui';
     import { registerForCompetition } from '$lib/utils/competitionRegistration';
 
-    /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} */
+    /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} 
+    */    
     let { data } = $props();
 
     // Initialize state cleanly with empty/false defaults to bypass Svelte 5 capture warnings

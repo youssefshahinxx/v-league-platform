@@ -5,7 +5,7 @@ import { requireAuth } from '$lib/auth';
 /**
  * Load the signed-in user's profile and protect the route with the shared auth helper.
  */
-export async function load(event) {
+export async function load() {
     const session = await requireAuth();
     const userId = session?.user?.id;
 
@@ -15,7 +15,7 @@ export async function load(event) {
 
     const { data: profile, error: dbError } = await supabase
         .from('profiles')
-        .select('full_name, nationality, gender, dob, club, bio, achievements')
+        .select('full_name, nationality, gender, dob, club, bio, achievements, avatar_url')
         .eq('id', userId)
         .single();
 
@@ -24,7 +24,6 @@ export async function load(event) {
     }
 
     return {
-        profile: profile || null,
-        onboarding: event.url.searchParams.get('onboarding') === 'true'
+        profile: profile || null
     };
 }

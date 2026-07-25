@@ -68,11 +68,6 @@
 
 				if (error) throw error;
 
-				if (data.user?.id) {
-					const { error: profileError } = await ensureProfileRecord(data.user.id, profileValues);
-					if (profileError) throw profileError;
-				}
-
 				if (data.session) {
 				// New users with an active session are sent straight to the profile editor.
 				await goto('/profile/edit');

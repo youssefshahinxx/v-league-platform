@@ -2,12 +2,13 @@ import { getSession } from '$lib/auth';
 import { fromTable, runSupabaseQuery } from '$lib/supabaseData';
 
 /**
- * Load competition listings and keep the session lookup centralized through the shared auth helper.
+ * Load competition listings with URL-driven filters.
  * @param {{ url: URL }} props
  */
 export async function load({ url }) {
+
     // Resolve the current session through the shared helper so this route stays aligned with the rest of the app.
-    await getSession();
+    await getSession()
 
     // Extract query parameters from the URL with robust fallbacks.
     const statusFilter = url.searchParams.get('status') || 'all';

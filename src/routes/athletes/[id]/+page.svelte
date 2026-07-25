@@ -14,16 +14,29 @@
     <div class="bg-white overflow-hidden rounded-lg border border-zinc-200 shadow-sm">
         <!-- Tailwind UI Pattern: Profile Header with Stats -->
         <div class="border-b border-zinc-200 bg-zinc-50 px-6 py-8 sm:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight text-zinc-900">
-                    {data.athlete?.full_name ?? 'Anonymous Athlete'}
-                </h1>
-                <div class="mt-2 flex items-center gap-3 text-sm text-zinc-500">
-                    <span class="inline-flex items-center rounded-md bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-800 uppercase border border-zinc-200">
-                        {data.athlete?.nationality || 'TBA'}
-                    </span>
-                    <span>•</span>
-                    <span>{data.athlete?.club || 'Independent / Unattached'}</span>
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-full overflow-hidden bg-zinc-200 border border-zinc-300 flex-shrink-0">
+                    {#if data.athlete?.avatar_url}
+                        <img src={data.athlete.avatar_url} alt="Avatar" class="w-full h-full object-cover" />
+                    {:else}
+                        <div class="w-full h-full flex items-center justify-center text-zinc-400">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                    {/if}
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-zinc-900">
+                        {data.athlete?.full_name ?? 'Anonymous Athlete'}
+                    </h1>
+                    <div class="mt-2 flex items-center gap-3 text-sm text-zinc-500">
+                        <span class="inline-flex items-center rounded-md bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-800 uppercase border border-zinc-200">
+                            {data.athlete?.nationality || 'TBA'}
+                        </span>
+                        <span>•</span>
+                        <span>{data.athlete?.club || 'Independent / Unattached'}</span>
+                    </div>
                 </div>
             </div>
 

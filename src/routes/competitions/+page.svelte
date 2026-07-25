@@ -5,6 +5,7 @@
 
     /** @type {{ data: import('./$types').PageData }} */
     let { data } = $props();
+    
 
     // Initialize state safely with empty defaults to prevent Svelte 5 capture warnings
     let search = $state('');
