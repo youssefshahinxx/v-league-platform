@@ -1,4 +1,6 @@
 <script>
+	import { onMount } from 'svelte';
+
 	const steps = [
 		{
 			icon: 'M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125A3.375 3.375 0 114.5 9.75m3.75 0l-.09 7.5m9-7.5V20.25c0 .621-.504 1.125-1.125 1.125H6.375c-.621 0-1.125-.504-1.125-1.125V9.75M19 7.5h-15',
@@ -16,9 +18,28 @@
 			description: 'Earn points through participation, performance improvement, and ranking stability. Watch your global position rise with every event.'
 		}
 	];
+
+	let visible = $state(false);
+
+	onMount(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					visible = true;
+					observer.disconnect();
+				}
+			},
+			{ threshold: 0.2 }
+		);
+
+		const el = document.getElementById('how-it-works');
+		if (el) observer.observe(el);
+
+		return () => observer.disconnect();
+	});
 </script>
 
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+<section id="how-it-works" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-black">
 	<div class="text-center mb-12">
 		<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#09090b]">
 			How It Works
@@ -30,19 +51,22 @@
 
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 		{#each steps as step, index}
-			<div class="relative flex flex-col items-center text-center p-6">
-				<div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#09090b] mb-5">
+			<div
+				class="relative flex flex-col items-center text-center p-6 {visible ? 'animate-fade-up' : 'opacity-0'}"
+				style="animation-delay: {index * 0.15}s"
+			>
+				<div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#fb310f] mb-5 hover:scale-110 transition-transform duration-300">
 					<svg class="w-6 h-6 text-[#fafafa]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
 						<path stroke-linecap="round" stroke-linejoin="round" d={step.icon} />
 					</svg>
 				</div>
-				<div class="absolute top-6 left-[calc(50%+2.5rem)] hidden md:block {index === steps.length - 1 ? 'hidden' : ''}">
-					{#if index < steps.length - 1}
+				{#if index < steps.length - 1}
+					<div class="absolute top-6 left-[calc(50%+2.5rem)] hidden md:block" aria-hidden="true">
 						<svg class="w-5 h-5 text-[#d4d4d8]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
 						</svg>
-					{/if}
-				</div>
+					</div>
+				{/if}
 				<h3 class="text-base font-semibold text-[#09090b] mb-2">{step.title}</h3>
 				<p class="text-sm text-[#71717a] leading-relaxed">{step.description}</p>
 			</div>

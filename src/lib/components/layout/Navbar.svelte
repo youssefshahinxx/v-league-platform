@@ -11,6 +11,8 @@
 		{ label: "Rankings", href: "/ranking" },
 		{ label: "Events", href: "/competitions" },
 		{ label: "Athletes", href: "/athletes" },
+		{ label: "Blog", href: "/blog" },
+		{ label: "Contact", href: "/contact" },
 	];
 
 	function toggleMobileMenu() {
@@ -24,16 +26,23 @@
 	class="w-full border-b border-[#e4e4e7] bg-[#fafafa] shadow-sm sticky top-0 z-50 transition-all duration-200 ease-in-out"
 >
 	<div
-		class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+		class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between"
 	>
 		<!-- BRAND LOGO -->
 		<div class="flex-shrink-0">
-			<a
-				href="/"
-				class="text-xl font-bold tracking-tight text-[#09090b] focus:ring-2 focus:ring-[#09090b] focus:outline-none rounded-md p-1"
-			>
-				BRAND
-			</a>
+			<div class="flex items-center gap-3">
+				<img
+					src="/assets/V-LOGO.png"
+					alt="V athletics League Logo"
+					class="w-16 rounded-full"
+				/>
+				<a
+					href="/"
+					class="text-xl font-bold tracking-tight text-[#09090b] rounded-md p-1"
+				>
+					V ATHLETICS LEAGUE
+				</a>
+			</div>
 		</div>
 
 		<!-- DESKTOP NAVIGATION LINKS -->
@@ -41,7 +50,7 @@
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class="text-sm font-medium text-[#71717a] hover:text-[#09090b] focus:ring-2 focus:ring-[#09090b] focus:outline-none rounded-md transition-all duration-200 ease-in-out"
+					class="text-sm font-medium text-[#71717a] hover:text-[#09090b] rounded-md transition-all duration-200 ease-in-out"
 				>
 					{link.label}
 				</a>
@@ -54,13 +63,13 @@
 				<!-- Logged Out Actions -->
 				<a
 					href="/auth"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
 				>
 					Sign In
 				</a>
 				<a
 					href="/auth?mode=register"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#fafafa] bg-[#09090b] rounded-md hover:bg-[#27272a] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#fafafa] bg-[#09090b] rounded-md hover:bg-[#27272a] transition-all duration-200 ease-in-out"
 				>
 					Sign Up
 				</a>
@@ -68,14 +77,14 @@
 				<!-- Logged In Actions -->
 				<a
 					href="/profile/edit"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#71717a] hover:text-[#09090b] focus:ring-2 focus:ring-[#09090b] focus:outline-none rounded-md transition-all duration-200 ease-in-out"
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#71717a] hover:text-[#fb310f] rounded-md transition-all duration-200 ease-in-out"
 				>
 					Profile
 				</a>
 				<button
 					type="button"
 					onclick={handleLogout}
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 focus:ring-2 focus:ring-[#dc2626] focus:outline-none transition-all duration-200 ease-in-out cursor-pointer"
+					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 transition-all duration-200 ease-in-out cursor-pointer"
 				>
 					Sign Out
 				</button>
@@ -87,7 +96,7 @@
 			<button
 				type="button"
 				onclick={toggleMobileMenu}
-				class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center p-2 rounded-md text-[#71717a] hover:text-[#09090b] hover:bg-[#e4e4e7] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+				class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center p-2 rounded-md text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
 				aria-controls="mobile-menu"
 				aria-expanded={isMobileMenuOpen}
 				aria-label="Toggle main navigation menu"
@@ -139,7 +148,7 @@
 				{#each navLinks as link}
 					<a
 						href={link.href}
-						class="block min-h-[44px] px-3 py-2 rounded-md text-base font-medium text-[#71717a] hover:text-[#09090b] hover:bg-[#e4e4e7] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+						class="rounded-md text-base font-medium text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
 					>
 						{link.label}
 					</a>
@@ -152,13 +161,13 @@
 					<div class="flex flex-col gap-2">
 						<a
 							href="/auth"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
 						>
 							Sign In
 						</a>
 						<a
 							href="/auth?mode=register"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#fafafa] bg-[#09090b] rounded-md hover:bg-[#27272a] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#fafafa] bg-[#fb310f] rounded-md hover:bg-[#e02c0d] transition-all duration-200 ease-in-out"
 						>
 							Sign Up
 						</a>
@@ -167,14 +176,14 @@
 					<div class="flex flex-col gap-2">
 						<a
 							href="/profile/edit"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#71717a] hover:text-[#09090b] hover:bg-[#e4e4e7] focus:ring-2 focus:ring-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
 						>
 							Profile
 						</a>
 				<button 
 					type="button"
 					onclick={handleLogout}
-					class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 focus:ring-2 focus:ring-[#dc2626] focus:outline-none transition-all duration-200 ease-in-out cursor-pointer"
+					class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 transition-all duration-200 ease-in-out cursor-pointer"
 				>
 					Sign Out
 				</button>

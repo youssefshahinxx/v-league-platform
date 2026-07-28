@@ -12,7 +12,7 @@ export async function load({ params }) {
 
     // 1. Fetch deep details for the single competition.
     const competition = await runSupabaseQuery(
-        fromTable('competitions').eq('id', competitionId).single(),
+        fromTable('competitions', 'id, title, location, event_date, status, ticket_price, description, image_url, media').eq('id', competitionId).single(),
         null,
         'Error fetching competition deep details'
     );

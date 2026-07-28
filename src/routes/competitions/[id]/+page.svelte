@@ -3,6 +3,7 @@
     import { page } from '$app/stores';
     import { formatCompetitionDateLong } from '$lib/utils/ui';
     import { registerForCompetition } from '$lib/utils/competitionRegistration';
+    import MediaSlideshow from '$lib/components/MediaSlideshow.svelte';
 
     /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} 
     */    
@@ -62,6 +63,9 @@
             
             <!-- Left 2 Columns: Detailed Information Deck -->
             <div class="lg:col-span-2 space-y-8 bg-white border border-zinc-200 rounded-lg p-6 sm:p-8">
+                <div class="-m-6 sm:-m-8 mb-6 sm:mb-8">
+                    <MediaSlideshow media={data.competition.media ?? []} heroImage={data.competition.image_url ?? ''} />
+                </div>
                 <div>
                     <h1 class="text-3xl font-bold tracking-tight text-zinc-900">{data.competition.title}</h1>
                     <p class="mt-2 text-sm text-zinc-500">{data.competition.location}</p>

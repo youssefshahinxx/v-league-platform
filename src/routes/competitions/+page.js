@@ -15,7 +15,7 @@ export async function load({ url }) {
     const searchQuery = url.searchParams.get('search') || '';
 
     // Initialize the base query.
-    let query = fromTable('competitions').order('event_date', { ascending: true });
+    let query = fromTable('competitions', 'id, title, location, event_date, status, ticket_price, image_url').order('event_date', { ascending: true });
 
     // Chain filters dynamically based on user selection.
     if (statusFilter !== 'all') {

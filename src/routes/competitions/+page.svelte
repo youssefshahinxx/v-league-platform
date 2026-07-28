@@ -29,13 +29,9 @@
 </script>
 
 <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    
-    <!-- Tailwind UI Pattern: Page Header with Actions -->
-    <div class="md:flex md:items-center md:justify-between mb-8 border-b border-zinc-200 pb-5">
-        <div class="min-w-0 flex-1">
-            <h2 class="text-2xl font-bold leading-7 text-zinc-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                League Competitions
-            </h2>
+    <div class="sm:flex sm:items-center sm:justify-between border-b border-zinc-200 pb-5 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">League Competitions</h1>
             <p class="mt-1 text-sm text-zinc-500">Find and register for upcoming athletic events.</p>
         </div>
     </div>
@@ -49,7 +45,7 @@
                 type="text" 
                 bind:value={search} 
                 placeholder="E.g. Cairo, Giza..." 
-                class="block w-full rounded-md border-0 py-1.5 px-3 text-zinc-900 ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-zinc-900 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border border-zinc-200 py-1.5 px-3 text-zinc-900 placeholder:text-zinc-400 focus:border-[#fb310f] transition-colors sm:text-sm sm:leading-6"
             />
         </div>
 
@@ -58,7 +54,7 @@
             <select 
                 id="status" 
                 bind:value={status} 
-                class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-zinc-900 ring-1 ring-inset ring-zinc-300 focus:ring-2 focus:ring-inset focus:ring-zinc-900 sm:text-sm sm:leading-6 bg-white"
+                class="block w-full rounded-md border border-zinc-200 py-1.5 pl-3 pr-10 text-zinc-900 focus:border-[#fb310f] transition-colors sm:text-sm sm:leading-6 bg-white"
             >
                 <option value="all">All Events</option>
                 <option value="upcoming">Upcoming</option>
@@ -70,7 +66,7 @@
 
         <button 
             type="submit" 
-            class="w-full sm:w-auto rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
+            class="w-full sm:w-auto rounded-md bg-[#fb310f] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#e02c0d]"
         >
             Filter Results
         </button>
@@ -81,7 +77,18 @@
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {#each (data.competitions ?? []) as competition}
                 {@const badge = getCompetitionStatusBadge(competition.status)}
-                <li class="col-span-1 divide-y divide-zinc-200 rounded-lg bg-white border border-zinc-200 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col">
+                <li class="col-span-1 divide-y divide-zinc-200 rounded-lg bg-white border border-zinc-200 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col overflow-hidden">
+                    {#if competition.image_url}
+                        <div class="w-full h-40 overflow-hidden">
+                            <img src={competition.image_url} alt={competition.title} class="w-full h-full object-cover" />
+                        </div>
+                    {:else}
+                        <div class="w-full h-32 bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+                            </svg>
+                        </div>
+                    {/if}
                     <div class="flex w-full items-center justify-between space-x-6 p-6">
                         <div class="flex-1 truncate">
                             <div class="flex items-center space-x-3">
@@ -103,7 +110,7 @@
                             <div class="flex w-0 flex-1">
                                 <a 
                                     href="/competitions/{competition.id}" 
-                                    class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 transition-colors"
+                                    class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-[#fb310f] hover:bg-[#fef2f2] transition-colors"
                                 >
                                     View Details
                                 </a>
@@ -112,7 +119,7 @@
                                 <div class="-ml-px flex w-0 flex-1">
                                     <a 
                                         href="/competitions/{competition.id}?action=register" 
-                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 transition-colors"
+                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-[#fb310f] hover:bg-[#fef2f2] transition-colors"
                                     >
                                         Register (${competition.ticket_price})
                                     </a>
@@ -124,18 +131,18 @@
             {/each}
         </ul>
     {:else}
-        <div class="text-center py-16 bg-white border border-zinc-200 rounded-lg shadow-sm">
+<div class="text-center py-16 bg-white border border-zinc-200 rounded-lg shadow-sm">
             <h3 class="mt-2 text-sm font-semibold text-zinc-900">No events found</h3>
             <p class="mt-1 text-sm text-zinc-500">Try adjusting your search or filters to find what you're looking for.</p>
             <div class="mt-6">
                 <button 
                     type="button" 
                     onclick={() => { search = ''; status = 'all'; applyFilters(new Event('submit')); }}
-                    class="inline-flex items-center rounded-md bg-zinc-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800"
+                    class="inline-flex items-center rounded-md bg-[#fb310f] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#e02c0d]"
                 >
                     Clear Filters
                 </button>
             </div>
-        </div>
+</div>
     {/if}
 </div>

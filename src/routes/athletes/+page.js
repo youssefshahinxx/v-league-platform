@@ -1,3 +1,4 @@
+import { supabase } from '$lib/supabase';
 import { fromTable, runSupabaseQuery } from '$lib/supabaseData';
 
 /**
@@ -12,7 +13,22 @@ export async function load() {
         'Error hydrating athletes directory'
     );
 
+    // Merge avatar_url from profiles
+    const rows = athletes ?? [];
+    if (rows.length > 0) {
+        const profileIds = rows.map(/** @param {{ profile_id: string }} r */ r => r.profile_id);
+        const { data: profiles } = await supabase
+            .from('profiles')
+            .select('id, avatar_url')
+            .in('id', profileIds);
+
+        const avatarMap = Object.fromEntries((profiles ?? []).map(p => [p.id, p.avatar_url]));
+        for (const row of rows) {
+            row.avatar_url = avatarMap[row.profile_id] ?? null;
+        }
+    }
+
     return {
-        athletes: athletes ?? []
+        athletes: rows
     };
 }

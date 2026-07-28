@@ -135,7 +135,7 @@
 				autocomplete="email" 
 				required 
 				bind:value={email}
-				class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
+				class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
 				placeholder="athlete@example.com"
 				disabled={isLoading}
 			/>
@@ -153,7 +153,7 @@
 				autocomplete={currentMode === 'login' ? 'current-password' : 'new-password'} 
 				required 
 				bind:value={password}
-				class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
+				class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
 				placeholder="••••••••"
 				disabled={isLoading}
 			/>
@@ -171,7 +171,7 @@
 					autocomplete="name"
 					required
 					bind:value={fullName}
-					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
+					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
 					placeholder="Alex Morgan"
 					disabled={isLoading}
 				/>
@@ -188,7 +188,7 @@
 						type="text"
 						maxlength="3"
 						bind:value={nationality}
-						class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a] uppercase"
+						class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a] uppercase"
 						placeholder="EGY"
 						disabled={isLoading}
 					/>
@@ -202,7 +202,7 @@
 						id="gender"
 						name="gender"
 						bind:value={gender}
-						class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+						class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out"
 						disabled={isLoading}
 					>
 						<option value="">Select Gender</option>
@@ -222,7 +222,7 @@
 					name="dob"
 					type="date"
 					bind:value={dob}
-					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out"
+					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out"
 					disabled={isLoading}
 				/>
 			</div>
@@ -236,7 +236,7 @@
 					name="club"
 					type="text"
 					bind:value={club}
-					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
+					class="w-full h-10 px-3 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
 					placeholder="North Star FC"
 					disabled={isLoading}
 				/>
@@ -251,7 +251,7 @@
 					name="bio"
 					rows="3"
 					bind:value={bio}
-					class="w-full px-3 py-2 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:ring-2 focus:ring-[#09090b] focus:border-[#09090b] focus:outline-none transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
+					class="w-full px-3 py-2 text-sm text-[#09090b] bg-[#ffffff] border border-[#e4e4e7] rounded-md focus:border-[#fb310f] transition-all duration-200 ease-in-out placeholder:text-[#71717a]"
 					placeholder="Tell the league a bit about your athletic journey."
 					disabled={isLoading}
 				></textarea>
@@ -262,7 +262,7 @@
 		<button 
 			type="submit" 
 			disabled={isLoading}
-			class="w-full min-h-[44px] mt-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#fafafa] bg-[#09090b] rounded-md hover:bg-[#27272a] focus:ring-2 focus:ring-[#09090b] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out"
+			class="w-full min-h-[44px] mt-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#fafafa] bg-[#fb310f] rounded-md hover:bg-[#e02c0d] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out"
 		>
 			{#if isLoading}
 				<!-- Loading Spinner Component (SVG inline) -->
@@ -284,7 +284,7 @@
 			<button 
 				type="button" 
 				onclick={toggleMode}
-				class="font-medium text-[#09090b] hover:underline focus:outline-none focus:ring-2 focus:ring-[#09090b] rounded-sm ml-1"
+				class="font-medium text-[#fb310f] hover:underline rounded-sm ml-1"
 			>
 				{modeCopy.toggleActionLabel}
 			</button>
@@ -293,7 +293,7 @@
 			<button 
 				type="button" 
 				onclick={toggleMode}
-				class="font-medium text-[#09090b] hover:underline focus:outline-none focus:ring-2 focus:ring-[#09090b] rounded-sm ml-1"
+				class="font-medium text-[#fb310f] hover:underline rounded-sm ml-1"
 			>
 				{modeCopy.toggleActionLabel}
 			</button>

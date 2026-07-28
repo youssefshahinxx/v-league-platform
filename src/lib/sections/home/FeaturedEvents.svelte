@@ -44,7 +44,7 @@
 		</div>
 		<a
 			href="/competitions"
-			class="hidden sm:inline-flex items-center text-sm font-medium text-[#09090b] hover:text-[#71717a] transition-colors"
+			class="hidden sm:inline-flex items-center text-sm font-medium text-[#fb310f] hover:text-[#e02c0d] transition-colors"
 		>
 			View all
 			<svg class="ml-1 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -56,7 +56,7 @@
 	{#if isLoading}
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 			{#each [1, 2, 3] as _}
-				<div class="rounded-lg border border-[#e4e4e7] bg-[#fafafa] p-6 animate-pulse">
+				<div class="rounded-lg border border-[#e4e4e7] bg-[#fafafa] p-6 skeleton-shimmer">
 					<div class="h-4 bg-[#e4e4e7] rounded w-3/4 mb-3"></div>
 					<div class="h-3 bg-[#e4e4e7] rounded w-1/2 mb-2"></div>
 					<div class="h-3 bg-[#e4e4e7] rounded w-1/3"></div>
@@ -68,16 +68,15 @@
 			{#each events as event}
 				<a
 					href="/competitions/{event.id}"
-					class="block rounded-lg border border-[#e4e4e7] bg-[#fafafa] p-6 hover:shadow-md hover:border-[#d4d4d8] transition-all duration-200"
+					class="block rounded-lg border border-[#e4e4e7] bg-[#fafafa] p-6 hover:shadow-lg hover:-translate-y-1 hover:border-[#fb310f]/30 transition-all duration-300"
 				>
 					<div class="flex items-center justify-between mb-3">
 						<span
 							class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-								{event.status === 'open'
-									? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20'
+								{event.status === 'open' ? 'bg-[#fef2f2] text-[#fb310f] ring-1 ring-inset ring-[#fb310f]/20 animate-pulse-subtle'
 									: event.status === 'upcoming'
 										? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10'
-										: 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20'}"
+										: 'bg-zinc-100 text-zinc-600'}"
 						>
 							{event.status === 'open' ? 'Open' : event.status === 'upcoming' ? 'Upcoming' : 'Closed'}
 						</span>
@@ -95,7 +94,7 @@
 	{/if}
 
 	<div class="mt-8 text-center sm:hidden">
-		<a href="/competitions" class="text-sm font-medium text-[#09090b] hover:text-[#71717a] transition-colors">
+		<a href="/competitions" class="text-sm font-medium text-[#fb310f] hover:text-[#e02c0d] transition-colors">
 			View all events →
 		</a>
 	</div>

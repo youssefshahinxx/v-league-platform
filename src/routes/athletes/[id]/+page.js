@@ -12,7 +12,7 @@ export async function load({ params }) {
 
     // 1. Fetch the core public profile data.
     const athlete = await runSupabaseQuery(
-        fromTable('profiles', 'id, full_name, nationality, gender, club, bio, achievements, avatar_url')
+        fromTable('profiles', 'id, full_name, nationality, gender, club, bio, achievements, avatar_url, facebook_url, tiktok_url, instagram_url, certificates')
             .eq('id', profileId)
             .single(),
         null,

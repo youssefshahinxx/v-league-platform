@@ -53,7 +53,7 @@
 	<div class="mb-8 text-center flex flex-col items-center">
 		<a 
 			href="/" 
-			class="text-2xl font-black tracking-tight text-[#09090b] focus:ring-2 focus:ring-[#09090b] focus:outline-none rounded-md p-1 mb-2"
+			class="text-2xl font-black tracking-tight text-[#09090b] rounded-md p-1 mb-2 hover:text-[#fb310f] transition-colors"
 		>
 			V-LEAGUE
 		</a>
@@ -65,7 +65,7 @@
 		</div>
 	{:else}
 		<!-- Auth Form Card Container -->
-		<div class="w-full max-w-md bg-[#ffffff] border border-[#e4e4e7] rounded-xl shadow-md p-6 sm:p-8">
+		<div class="w-full max-w-md bg-[#ffffff] border border-[#e4e4e7] rounded-xl shadow-md p-6 sm:p-8 hover:border-[#fb310f]/30 transition-colors">
 			<!-- We pass the URL-derived mode into the smart form component -->
 			<AuthForm {initialMode} />
 		</div>

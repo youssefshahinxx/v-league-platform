@@ -39,6 +39,17 @@
         <ul role="list" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {#each filteredAthletes as athlete}
                 <li class="relative flex items-center space-x-4 rounded-lg border border-zinc-200 bg-white p-5 shadow-sm hover:border-zinc-400 transition">
+                    <div class="w-10 h-10 rounded-full overflow-hidden bg-zinc-100 border border-zinc-200 flex-shrink-0">
+                        {#if athlete.avatar_url}
+                            <img src={athlete.avatar_url} alt="" class="w-full h-full object-cover" />
+                        {:else}
+                            <div class="w-full h-full flex items-center justify-center text-zinc-400">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
+                        {/if}
+                    </div>
                     <div class="min-w-0 flex-1">
                         <a href="/athletes/{athlete.profile_id}" class="focus:outline-none">
                             <span class="absolute inset-0" aria-hidden="true"></span>
