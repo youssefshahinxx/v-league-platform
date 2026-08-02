@@ -1,17 +1,14 @@
 <script>
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
-    import { buildCompetitionFilterUrl, formatCompetitionDate, getCompetitionStatusBadge } from '$lib/utils/ui';
+    import { buildCompetitionFilterUrl, formatCompetitionDate } from '$lib/utils/ui';
 
-    /** @type {{ data: import('./$types').PageData }} */
+    // /** @type {{ data: import('./$types').PageData }} */
     let { data } = $props();
-    
 
-    // Initialize state safely with empty defaults to prevent Svelte 5 capture warnings
     let search = $state('');
     let status = $state('all');
 
-    // Hydrate the form state reactively when the page data (URL params) changes
     $effect(() => {
         search = data.searchQuery ?? '';
         status = data.statusFilter ?? 'all';
@@ -20,41 +17,58 @@
     /** @param {Event} e */
     function applyFilters(e) {
         e.preventDefault();
-
         const url = buildCompetitionFilterUrl($page.url, search, status);
-
-        // Push the new URL to SvelteKit's router without reloading the full page
         goto(url.toString(), { keepFocus: true, noScroll: true });
+    }
+
+    /** @param {string} status */
+    function statusLabel(status) {
+        switch (status) {
+            case 'open': return 'OPEN';
+            case 'upcoming': return 'UPCOMING';
+            case 'closed': return 'CLOSED';
+            case 'completed': return 'COMPLETED';
+            default: return 'CLOSED';
+        }
+    }
+
+    /** @param {string} status */
+    function statusColor(status) {
+        switch (status) {
+            case 'open': return 'bg-secondary-fixed text-on-secondary';
+            case 'upcoming': return 'bg-primary text-on-primary';
+            case 'closed': return 'bg-surface-variant text-on-surface-variant';
+            case 'completed': return 'bg-surface-container text-on-surface-variant';
+            default: return 'bg-surface-variant text-on-surface-variant';
+        }
     }
 </script>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center sm:justify-between border-b border-zinc-200 pb-5 mb-8">
+<div class="w-full px-margin-mobile lg:px-margin-desktop py-margin-desktop">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-stack-md">
         <div>
-            <h1 class="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">League Competitions</h1>
-            <p class="mt-1 text-sm text-zinc-500">Find and register for upcoming athletic events.</p>
+            <h1 class="font-headline-lg text-headline-lg text-white uppercase italic">League Competitions</h1>
+            <p class="font-body-md text-on-surface-variant mt-2">Find and register for upcoming athletic events.</p>
         </div>
     </div>
 
-    <!-- Tailwind UI Pattern: Inline Filter Bar -->
-    <form onsubmit={applyFilters} class="mb-10 flex flex-col sm:flex-row gap-4 items-end bg-zinc-50 p-4 rounded-lg border border-zinc-200">
-        <div class="w-full sm:w-1/3 flex flex-col gap-1.5">
-            <label for="search" class="text-xs font-medium text-zinc-700">Search by Location</label>
-            <input 
-                id="search" 
-                type="text" 
-                bind:value={search} 
-                placeholder="E.g. Cairo, Giza..." 
-                class="block w-full rounded-md border border-zinc-200 py-1.5 px-3 text-zinc-900 placeholder:text-zinc-400 focus:border-[#fb310f] transition-colors sm:text-sm sm:leading-6"
+    <form onsubmit={applyFilters} class="mb-stack-lg flex flex-col sm:flex-row gap-gutter items-end">
+        <div class="w-full sm:w-1/3 flex flex-col gap-stack-sm">
+            <label for="search" class="font-label-caps text-label-caps text-primary">Search by Location</label>
+            <input
+                id="search"
+                type="text"
+                bind:value={search}
+                placeholder="E.g. Cairo, Giza..."
+                class="w-full bg-surface-container-high border-b-2 border-outline-variant px-stack-md py-stack-sm focus:border-primary outline-none text-on-surface font-body-md placeholder:text-on-surface-variant/50"
             />
         </div>
-
-        <div class="w-full sm:w-1/4 flex flex-col gap-1.5">
-            <label for="status" class="text-xs font-medium text-zinc-700">Event Status</label>
-            <select 
-                id="status" 
-                bind:value={status} 
-                class="block w-full rounded-md border border-zinc-200 py-1.5 pl-3 pr-10 text-zinc-900 focus:border-[#fb310f] transition-colors sm:text-sm sm:leading-6 bg-white"
+        <div class="w-full sm:w-1/4 flex flex-col gap-stack-sm">
+            <label for="status" class="font-label-caps text-label-caps text-primary">Event Status</label>
+            <select
+                id="status"
+                bind:value={status}
+                class="w-full bg-surface-container-high border-b-2 border-outline-variant px-stack-md py-stack-sm focus:border-primary outline-none text-on-surface font-body-md"
             >
                 <option value="all">All Events</option>
                 <option value="upcoming">Upcoming</option>
@@ -63,86 +77,58 @@
                 <option value="completed">Completed</option>
             </select>
         </div>
-
-        <button 
-            type="submit" 
-            class="w-full sm:w-auto rounded-md bg-[#fb310f] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#e02c0d]"
-        >
-            Filter Results
+        <button type="submit" class="bg-primary hover:bg-primary/90 text-on-primary px-8 py-stack-sm font-label-caps text-label-caps transition-all transform hover:scale-105 active:scale-95">
+            FILTER
         </button>
     </form>
 
-    <!-- Tailwind UI Pattern: Grid List Layout -->
     {#if (data.competitions ?? []).length > 0}
-        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
             {#each (data.competitions ?? []) as competition}
-                {@const badge = getCompetitionStatusBadge(competition.status)}
-                <li class="col-span-1 divide-y divide-zinc-200 rounded-lg bg-white border border-zinc-200 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col overflow-hidden">
-                    {#if competition.image_url}
-                        <div class="w-full h-40 overflow-hidden">
-                            <img src={competition.image_url} alt={competition.title} class="w-full h-full object-cover" />
-                        </div>
-                    {:else}
-                        <div class="w-full h-32 bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center">
-                            <svg class="w-10 h-10 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
-                            </svg>
-                        </div>
-                    {/if}
-                    <div class="flex w-full items-center justify-between space-x-6 p-6">
-                        <div class="flex-1 truncate">
-                            <div class="flex items-center space-x-3">
-                                <h3 class="truncate text-lg font-medium text-zinc-900">{competition.title}</h3>
+                <a href="/competitions/{competition.id}" class="bg-surface-container-high group hover:bg-surface-variant transition-all block">
+                    <div class="h-48 relative overflow-hidden">
+                        {#if competition.image_url}
+                            <img src={competition.image_url} alt={competition.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        {:else}
+                            <div class="w-full h-full bg-gradient-to-br from-surface-variant to-surface-container-highest flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                                <span class="material-symbols-outlined text-6xl text-outline">stadium</span>
                             </div>
-                            <p class="mt-1 truncate text-sm text-zinc-500">{competition.location}</p>
-                            <p class="mt-1 text-xs text-zinc-400">{formatCompetitionDate(competition.event_date)}</p>
+                        {/if}
+                        <div class="absolute top-4 left-4 {statusColor(competition.status)} px-3 py-1 font-label-caps text-label-caps">
+                            {statusLabel(competition.status)}
                         </div>
-                        
-                        <!-- Status Badge Engine -->
-                        <span class={getCompetitionStatusBadge(competition.status).className}>
-                            {getCompetitionStatusBadge(competition.status).label}
-                        </span>
+                        <div class="absolute top-4 right-4 bg-surface-container/80 backdrop-blur-sm px-3 py-1 font-label-caps text-[10px] text-on-surface">
+                            {formatCompetitionDate(competition.event_date)}
+                        </div>
                     </div>
-
-                    <!-- Card Actions -->
-                    <div class="mt-auto">
-                        <div class="-mt-px flex divide-x divide-zinc-200">
-                            <div class="flex w-0 flex-1">
-                                <a 
-                                    href="/competitions/{competition.id}" 
-                                    class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-[#fb310f] hover:bg-[#fef2f2] transition-colors"
-                                >
-                                    View Details
-                                </a>
-                            </div>
+                    <div class="p-stack-lg space-y-stack-sm">
+                        <h4 class="font-headline-md text-headline-md text-white uppercase group-hover:text-primary transition-colors">{competition.title}</h4>
+                        <p class="font-body-md text-on-surface-variant">{competition.location}</p>
+                        <div class="pt-stack-md">
                             {#if competition.status === 'open'}
-                                <div class="-ml-px flex w-0 flex-1">
-                                    <a 
-                                        href="/competitions/{competition.id}?action=register" 
-                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-[#fb310f] hover:bg-[#fef2f2] transition-colors"
-                                    >
-                                        Register (${competition.ticket_price})
-                                    </a>
-                                </div>
+                                <span class="block w-full border border-primary text-primary py-stack-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all text-center">
+                                    REGISTER (${competition.ticket_price})
+                                </span>
+                            {:else}
+                                <span class="block w-full border border-outline text-outline py-stack-sm font-label-caps text-label-caps text-center">
+                                    VIEW DETAILS
+                                </span>
                             {/if}
                         </div>
                     </div>
-                </li>
+                </a>
             {/each}
-        </ul>
+        </div>
     {:else}
-<div class="text-center py-16 bg-white border border-zinc-200 rounded-lg shadow-sm">
-            <h3 class="mt-2 text-sm font-semibold text-zinc-900">No events found</h3>
-            <p class="mt-1 text-sm text-zinc-500">Try adjusting your search or filters to find what you're looking for.</p>
-            <div class="mt-6">
-                <button 
-                    type="button" 
-                    onclick={() => { search = ''; status = 'all'; applyFilters(new Event('submit')); }}
-                    class="inline-flex items-center rounded-md bg-[#fb310f] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#e02c0d]"
-                >
-                    Clear Filters
-                </button>
-            </div>
-</div>
+        <div class="text-center py-margin-desktop bg-surface-container-low border border-white/5">
+            <p class="font-body-md text-on-surface-variant mb-stack-md">No events match your filters.</p>
+            <button
+                type="button"
+                onclick={() => { search = ''; status = 'all'; applyFilters(new Event('submit')); }}
+                class="bg-primary hover:bg-primary/90 text-on-primary px-8 py-stack-sm font-label-caps text-label-caps transition-all"
+            >
+                CLEAR FILTERS
+            </button>
+        </div>
     {/if}
 </div>

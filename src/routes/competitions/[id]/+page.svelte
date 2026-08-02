@@ -5,16 +5,13 @@
     import { registerForCompetition } from '$lib/utils/competitionRegistration';
     import MediaSlideshow from '$lib/components/MediaSlideshow.svelte';
 
-    /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} 
-    */    
+    /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} */
     let { data } = $props();
 
-    // Initialize state cleanly with empty/false defaults to bypass Svelte 5 capture warnings
     let hasRegistered = $state(false);
     let isProcessing = $state(false);
     let feedbackMessage = $state('');
 
-    // Hydrate local interaction state safely from server/load data
     $effect(() => {
         hasRegistered = data.userHasRegistered ?? false;
     });
@@ -47,100 +44,99 @@
 
         feedbackMessage = result.message;
     }
+
+    /** @param {string} status */
+    function statusBadge(status) {
+        switch (status) {
+            case 'open': return { label: 'OPEN', class: 'bg-secondary-fixed text-on-secondary' };
+            case 'upcoming': return { label: 'UPCOMING', class: 'bg-primary text-on-primary' };
+            case 'closed': return { label: 'CLOSED', class: 'bg-surface-variant text-on-surface-variant' };
+            case 'completed': return { label: 'COMPLETED', class: 'bg-surface-container text-on-surface-variant' };
+            default: return { label: 'CLOSED', class: 'bg-surface-variant text-on-surface-variant' };
+        }
+    }
 </script>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <!-- Back to Hub Navigation -->
-    <div class="mb-6">
-        <a href="/competitions" class="text-sm font-medium text-zinc-500 hover:text-zinc-950 transition-colors">
-            ← Back to all competitions
+<div class="w-full px-margin-mobile lg:px-margin-desktop py-margin-desktop">
+    <div class="mb-stack-lg">
+        <a href="/competitions" class="font-label-caps text-label-caps text-primary hover:text-on-surface transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to all competitions
         </a>
     </div>
 
     {#if data.competition}
-        <!-- Tailwind UI Pattern: Split Profile Layout Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            
-            <!-- Left 2 Columns: Detailed Information Deck -->
-            <div class="lg:col-span-2 space-y-8 bg-white border border-zinc-200 rounded-lg p-6 sm:p-8">
-                <div class="-m-6 sm:-m-8 mb-6 sm:mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+            <!-- Left: Main Content -->
+            <div class="lg:col-span-2 bg-surface-container-high p-stack-lg space-y-stack-lg">
+                <div class="-m-stack-lg mb-0">
                     <MediaSlideshow media={data.competition.media ?? []} heroImage={data.competition.image_url ?? ''} />
                 </div>
+
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-zinc-900">{data.competition.title}</h1>
-                    <p class="mt-2 text-sm text-zinc-500">{data.competition.location}</p>
-                </div>
-
-                <!-- Tailwind UI Pattern: Clean Meta List Description Block -->
-                <div class="border-t border-zinc-100 pt-6">
-                    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-                        <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Event Date</dt>
-                            <dd class="mt-1 text-sm font-medium text-zinc-900">{formatCompetitionDateLong(data.competition.event_date)}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Venue Location</dt>
-                            <dd class="mt-1 text-sm font-medium text-zinc-900">{data.competition.location}</dd>
-                        </div>
-                    </dl>
-                </div>
-
-                <div class="border-t border-zinc-100 pt-6">
-                    <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">About The Competition</h3>
-                    <div class="text-sm text-zinc-600 leading-relaxed space-y-4">
-                        {data.competition.description ?? 'No specific technical rulebooks or descriptions published for this event yet.'}
+                    <div class="flex items-center gap-stack-md mb-stack-sm">
+                        <span class="{statusBadge(data.competition.status).class} px-3 py-1 font-label-caps text-label-caps">
+                            {statusBadge(data.competition.status).label}
+                        </span>
+                        <span class="font-body-md text-on-surface-variant">{formatCompetitionDateLong(data.competition.event_date)}</span>
                     </div>
+                    <h1 class="font-headline-lg text-headline-lg text-white uppercase italic">{data.competition.title}</h1>
+                    <p class="font-body-lg text-on-surface-variant mt-stack-sm">{data.competition.location}</p>
+                </div>
+
+                <div class="border-t border-white/5 pt-stack-lg">
+                    <h3 class="font-label-caps text-label-caps text-primary uppercase mb-stack-md">About The Competition</h3>
+                    <p class="font-body-md text-on-surface-variant leading-relaxed">
+                        {data.competition.description ?? 'No specific technical rulebooks or descriptions published for this event yet.'}
+                    </p>
                 </div>
             </div>
 
-            <!-- Right 1 Column: Sticky Action Widget Card -->
-            <div class="lg:col-span-1 bg-zinc-50 border border-zinc-200 rounded-lg p-6 space-y-6 lg:sticky lg:top-6">
+            <!-- Right: Registration Sidebar -->
+            <div class="lg:col-span-1 bg-surface-container-low p-stack-lg space-y-stack-md lg:sticky lg:top-24">
                 <div>
-                    <h3 class="text-sm font-semibold text-zinc-900">Registration Entry</h3>
-                    <p class="mt-1 text-xs text-zinc-500">Secure your competitive slot instantly.</p>
+                    <h3 class="font-headline-md text-headline-md text-white uppercase">Entry</h3>
+                    <p class="font-body-md text-on-surface-variant mt-stack-sm">Secure your competitive slot instantly.</p>
                 </div>
 
-                <div class="border-t border-zinc-200 pt-4 flex items-baseline justify-between">
-                    <span class="text-sm text-zinc-600">Pass Price</span>
-                    <span class="text-2xl font-bold text-zinc-900">${data.competition.ticket_price ?? 0}</span>
+                <div class="border-t border-white/5 pt-stack-md flex items-baseline justify-between">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Pass Price</span>
+                    <span class="font-stats-number text-stats-number text-white">${data.competition.ticket_price ?? 0}</span>
                 </div>
 
                 {#if feedbackMessage}
-                    <div class="p-3 text-xs rounded font-medium bg-zinc-900 text-white">
+                    <div class="p-stack-md bg-surface-container border border-white/5 font-body-md text-on-surface">
                         {feedbackMessage}
                     </div>
                 {/if}
 
-                <!-- Contextual Action Engine -->
                 {#if hasRegistered}
-                    <div class="w-full text-center rounded-md bg-green-50 border border-green-200 px-4 py-3 text-sm font-semibold text-green-800">
-                        ✓ Confirmed Competitor
+                    <div class="w-full text-center bg-secondary-fixed text-on-secondary px-stack-md py-stack-sm font-label-caps text-label-caps">
+                        ✓ CONFIRMED COMPETITOR
                     </div>
                 {:else if data.competition.status === 'completed'}
-                    <div class="w-full text-center rounded-md bg-zinc-200 px-4 py-3 text-sm font-semibold text-zinc-500">
-                        Event Completed
+                    <div class="w-full text-center bg-surface-container text-on-surface-variant px-stack-md py-stack-sm font-label-caps text-label-caps">
+                        EVENT COMPLETED
                     </div>
                 {:else if data.competition.status === 'closed'}
-                    <div class="w-full text-center rounded-md bg-zinc-200 px-4 py-3 text-sm font-semibold text-zinc-500">
-                        Registration Closed
+                    <div class="w-full text-center bg-surface-container text-on-surface-variant px-stack-md py-stack-sm font-label-caps text-label-caps">
+                        REGISTRATION CLOSED
                     </div>
                 {:else}
-                    <button 
+                    <button
                         type="button"
                         onclick={handleRegistration}
                         disabled={isProcessing}
-                        class="w-full text-center rounded-md bg-zinc-900 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950 transition disabled:bg-zinc-400"
+                        class="w-full text-center bg-primary hover:bg-primary/90 text-on-primary px-stack-md py-stack-sm font-label-caps text-label-caps transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
                     >
-                        {isProcessing ? 'Verifying Checkout...' : 'Confirm Entry Spot'}
+                        {isProcessing ? 'PROCESSING...' : 'CONFIRM ENTRY SPOT'}
                     </button>
                 {/if}
             </div>
-
         </div>
     {:else}
-        <div class="text-center py-24 bg-white border border-zinc-200 rounded-lg">
-            <h3 class="text-sm font-semibold text-zinc-900">Competition context missing</h3>
-            <p class="mt-1 text-sm text-zinc-500">This event listing may have been archived or removed from the league records.</p>
+        <div class="text-center py-margin-desktop bg-surface-container-low border border-white/5">
+            <p class="font-body-md text-on-surface-variant">This event listing may have been archived or removed from the league records.</p>
         </div>
     {/if}
 </div>

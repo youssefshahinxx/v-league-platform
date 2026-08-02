@@ -14,11 +14,11 @@
     );
 </script>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center sm:justify-between border-b border-zinc-200 pb-5 mb-8">
+<div class="w-full px-margin-mobile lg:px-margin-desktop py-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-stack-md">
         <div>
-            <h1 class="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">Athlete Directory</h1>
-            <p class="mt-1 text-sm text-zinc-500">Search and view verified competitors registered across the league.</p>
+            <h1 class="font-headline-lg text-headline-lg text-white uppercase italic">League Competitions</h1>
+            <p class="font-body-md text-on-surface-variant mt-2">Find and register for upcoming athletic events.</p>
         </div>
     </div>
 

@@ -1,194 +1,86 @@
 <script lang="ts">
 	import { handleLogout } from "$lib/auth.js";
-	// Props using Svelte 5 runes with default values
 	let { isLoggedIn = false } = $props();
-
-	// Local state management for the responsive mobile menu
 	let isMobileMenuOpen = $state(false);
 
-	// Navigation links matrix for single-source maintenance
 	const navLinks = [
-		{ label: "Rankings", href: "/ranking" },
+		{ label: "Ranking", href: "/ranking" },
 		{ label: "Events", href: "/competitions" },
 		{ label: "Athletes", href: "/athletes" },
-		{ label: "Blog", href: "/blog" },
+		{ label: "News", href: "/blog" },
 		{ label: "Contact", href: "/contact" },
 	];
 
 	function toggleMobileMenu() {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	}
-
 </script>
 
-<!-- Outer Container matching max content width from style.md -->
-<header
-	class="w-full border-b border-[#e4e4e7] bg-[#fafafa] shadow-sm sticky top-0 z-50 transition-all duration-200 ease-in-out"
->
-	<div
-		class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between"
-	>
-		<!-- BRAND LOGO -->
-		<div class="flex-shrink-0">
-			<div class="flex items-center gap-3">
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-2xl border-b border-white/5">
+	<div class="h-20 w-full px-margin-mobile lg:px-margin-desktop flex items-center justify-between">
+		<div class="flex items-center gap-4">
+			<a href='/' >
 				<img
-					src="/assets/V-LOGO.png"
-					alt="V athletics League Logo"
-					class="w-16 rounded-full"
+				src="/assets/V-LOGO.png"
+				alt="Athletics League Logo"
+				class="h-16 rounded-full w-auto object-contain"
 				/>
-				<a
-					href="/"
-					class="text-xl font-bold tracking-tight text-[#09090b] rounded-md p-1"
-				>
-					V ATHLETICS LEAGUE
-				</a>
-			</div>
+			</a>
+			<a href="/" class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block">
+				Athletics League
+			</a>
 		</div>
-
-		<!-- DESKTOP NAVIGATION LINKS -->
-		<nav class="hidden md:flex space-x-8" aria-label="Main Navigation">
+		<nav class="hidden lg:flex items-center gap-stack-lg">
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class="text-sm font-medium text-[#71717a] hover:text-[#09090b] rounded-md transition-all duration-200 ease-in-out"
+					class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
 				>
 					{link.label}
 				</a>
 			{/each}
 		</nav>
-
-		<!-- DESKTOP AUTH ACTION STATES -->
-		<div class="hidden md:flex items-center gap-4">
+		<div class="flex items-center gap-stack-md">
+			
 			{#if !isLoggedIn}
-				<!-- Logged Out Actions -->
-				<a
-					href="/auth"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
-				>
-					Sign In
-				</a>
-				<a
-					href="/auth?mode=register"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#fafafa] bg-[#09090b] rounded-md hover:bg-[#27272a] transition-all duration-200 ease-in-out"
-				>
-					Sign Up
+				<a href="/auth" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+					<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
 				</a>
 			{:else}
-				<!-- Logged In Actions -->
-				<a
-					href="/profile/edit"
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#71717a] hover:text-[#fb310f] rounded-md transition-all duration-200 ease-in-out"
-				>
-					Profile
+				<a href="/profile/edit" class="w-8 h-8 rounded-full flex items-center justify-center">
+					<span class="material-symbols-outlined text-on-primary text-40">person</span>
 				</a>
-				<button
-					type="button"
-					onclick={handleLogout}
-					class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 transition-all duration-200 ease-in-out cursor-pointer"
-				>
-					Sign Out
+				<button onclick={handleLogout} class="text-md font-bold text-primary hover:text-on-surface transition-colors cursor-pointer">
+					Logout
 				</button>
 			{/if}
-		</div>
-
-		<!-- MOBILE MENU BUTTON (Strict Accessibility Compliance) -->
-		<div class="flex items-center md:hidden">
-			<button
-				type="button"
-				onclick={toggleMobileMenu}
-				class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center p-2 rounded-md text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
-				aria-controls="mobile-menu"
-				aria-expanded={isMobileMenuOpen}
-				aria-label="Toggle main navigation menu"
-			>
-				{#if !isMobileMenuOpen}
-					<!-- Hamburger Icon -->
-					<svg
-						class="h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-						/>
-					</svg>
-				{:else}
-					<!-- Close X Icon -->
-					<svg
-						class="h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				{/if}
+			<button onclick={toggleMobileMenu} class="lg:hidden p-unit cursor-pointer">
+				<span class="material-symbols-outlined text-on-surface">
+					{isMobileMenuOpen ? 'close' : 'menu'}
+				</span>
 			</button>
 		</div>
 	</div>
-
-	<!-- MOBILE DROPDOWN NAVIGATION MENU -->
 	{#if isMobileMenuOpen}
-		<div
-			class="md:hidden border-t border-[#e4e4e7] bg-[#fafafa]"
-			id="mobile-menu"
-		>
-			<div class="space-y-1 px-4 pt-2 pb-3">
+		<div class="lg:hidden border-t border-white/5 bg-surface">
+			<div class="px-margin-mobile py-stack-md space-y-stack-sm">
 				{#each navLinks as link}
 					<a
 						href={link.href}
-						class="rounded-md text-base font-medium text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
+						class="block py-stack-sm font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
+						onclick={() => isMobileMenuOpen = false}
 					>
 						{link.label}
 					</a>
 				{/each}
-			</div>
-
-			<!-- Mobile Auth Segment Delineator -->
-			<div class="border-t border-[#e4e4e7] pt-4 pb-4 px-4">
-				{#if !isLoggedIn}
-					<div class="flex flex-col gap-2">
-						<a
-							href="/auth"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#27272a] bg-transparent border border-[#e4e4e7] rounded-md hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
-						>
-							Sign In
-						</a>
-						<a
-							href="/auth?mode=register"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#fafafa] bg-[#fb310f] rounded-md hover:bg-[#e02c0d] transition-all duration-200 ease-in-out"
-						>
-							Sign Up
-						</a>
-					</div>
-				{:else}
-					<div class="flex flex-col gap-2">
-						<a
-							href="/profile/edit"
-							class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#71717a] hover:text-[#fb310f] hover:bg-[#e4e4e7] transition-all duration-200 ease-in-out"
-						>
-							Profile
-						</a>
-				<button 
-					type="button"
-					onclick={handleLogout}
-					class="w-full min-h-[44px] inline-flex items-center justify-center px-4 py-2 text-base font-medium text-[#dc2626] bg-[#fef2f2] border border-[#dc2626]/20 rounded-md hover:bg-[#fef2f2]/80 transition-all duration-200 ease-in-out cursor-pointer"
-				>
-					Sign Out
-				</button>
-					</div>
-				{/if}
+				<div class="border-t border-white/5 pt-stack-md mt-stack-md">
+					{#if !isLoggedIn}
+						<a href="/auth" class="block py-stack-sm font-label-caps text-label-caps text-primary" onclick={() => isMobileMenuOpen = false}>Sign In</a>
+						<a href="/auth?mode=register" class="block py-stack-sm font-label-caps text-label-caps text-primary" onclick={() => isMobileMenuOpen = false}>Sign Up</a>
+					{:else}
+						<button onclick={handleLogout} class="block py-stack-sm font-label-caps text-label-caps text-error cursor-pointer">Sign Out</button>
+					{/if}
+				</div>
 			</div>
 		</div>
 	{/if}
