@@ -19,7 +19,7 @@
 
 <section
 	bind:this={el}
-	class="relative min-h-[90vh] flex items-center -mt-16 pt-16 overflow-hidden transition-all duration-1000 {isVisible ? 'opacity-100' : 'opacity-0'}"
+	class="relative min-h-[90vh] mb-16 flex items-center -mt-16 pt-16 overflow-hidden transition-all duration-1000 {isVisible ? 'opacity-100' : 'opacity-0'}"
 >
 	<div class="absolute inset-0 z-0">
 		<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10"></div>
@@ -33,8 +33,8 @@
 	<div class="relative z-20 w-full px-margin-mobile lg:px-margin-desktop">
 		<div class="max-w-4xl space-y-stack-md">
 			<div class="flex items-center gap-stack-sm">
-				<span class="w-3 h-3 bg-secondary-fixed rounded-full"></span>
-				<span class="font-label-caps text-label-caps text-secondary-fixed uppercase tracking-widest">Live: V-League Season Open</span>
+				<span class="w-3 h-3 bg-primary rounded-full"></span>
+				<span class="font-label-caps text-label-caps animate-pulse text-primary-fixed uppercase tracking-widest">Live: Aro-League Season Open</span>
 			</div>
 			<h1 class="font-display-xl text-display-xl text-white uppercase italic leading-[0.9] tracking-tighter">
 				THE SPEED OF<br />

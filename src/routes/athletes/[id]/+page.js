@@ -25,10 +25,10 @@ export async function load({ params }) {
 
     // 2. Fetch the aggregated statistics straight from our PostgreSQL View.
     const stats = await runSupabaseQuery(
-        fromTable('leaderboard', 'total_points, events_tracked')
+        fromTable('leaderboard', 'total_points, events_tracked, best_rank, league_records, competition_records, national_records, last_competition')
             .eq('profile_id', profileId)
             .maybeSingle(),
-        { total_points: 0, events_tracked: 0 },
+        { total_points: 0, events_tracked: 0, best_rank: null, league_records: 0, competition_records: 0, national_records: 0, last_competition: null },
         'Error fetching athlete stats'
     );
 

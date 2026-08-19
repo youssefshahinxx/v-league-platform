@@ -21,14 +21,14 @@
 		<div class="flex items-center gap-4">
 			<a href='/' >
 				<img
-				src="/assets/V-LOGO.png"
+				src="/assets/Adobe Express - file (1).png"
 				alt="Athletics League Logo"
-				class="h-16 rounded-full w-auto object-contain"
+				class="h-full w-50 object-contain"
 				/>
 			</a>
-			<a href="/" class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block">
+			<!-- <a href="/" class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block">
 				Athletics League
-			</a>
+			</a> -->
 		</div>
 		<nav class="hidden lg:flex items-center gap-stack-lg">
 			{#each navLinks as link}

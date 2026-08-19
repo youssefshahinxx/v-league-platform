@@ -17,7 +17,16 @@ export async function load({ params }) {
         'Error fetching competition deep details'
     );
 
-    // 2. Check registration presence using the resolved session.
+    // 2. Fetch all scheduled events for this competition.
+    const competitionEvents = await runSupabaseQuery(
+        fromTable('competition_events', 'id, name, gender, age_category, round_type, status, scheduled_at')
+            .eq('competition_id', competitionId)
+            .order('scheduled_at', { ascending: true }),
+        [],
+        'Error fetching competition events'
+    );
+
+    // 3. Check registration presence using the resolved session.
     let userHasRegistered = false;
 
     if (session?.user) {
@@ -35,6 +44,7 @@ export async function load({ params }) {
 
     return {
         competition,
+        competitionEvents,
         userHasRegistered,
         isLoggedIn: loggedIn
     };

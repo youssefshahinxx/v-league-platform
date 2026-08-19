@@ -4,8 +4,9 @@
     import { formatCompetitionDateLong } from '$lib/utils/ui';
     import { registerForCompetition } from '$lib/utils/competitionRegistration';
     import MediaSlideshow from '$lib/components/MediaSlideshow.svelte';
+    import CompetitionEventTable from '$lib/components/CompetitionEventTable.svelte';
 
-    /** @type {{ data: { competition: any, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} */
+    /** @type {{ data: { competition: any, competitionEvents: Array<any>, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} */
     let { data } = $props();
 
     let hasRegistered = $state(false);
@@ -54,6 +55,29 @@
             case 'completed': return { label: 'COMPLETED', class: 'bg-surface-container text-on-surface-variant' };
             default: return { label: 'CLOSED', class: 'bg-surface-variant text-on-surface-variant' };
         }
+    }
+
+    /** @param {string | null | undefined} status */
+    function eventStatusBadge(status) {
+        switch (status) {
+            case 'live': return { label: 'LIVE', class: 'bg-primary text-on-primary' };
+            case 'completed': return { label: 'COMPLETED', class: 'bg-secondary-fixed text-on-secondary' };
+            case 'canceled': return { label: 'CANCELED', class: 'bg-surface-container text-on-surface-variant' };
+            case 'scheduled': return { label: 'SCHEDULED', class: 'bg-surface-variant text-on-surface-variant' };
+            default: return { label: (status ?? '---').toUpperCase(), class: 'bg-surface-variant text-on-surface-variant' };
+        }
+    }
+
+    /** @param {string | null | undefined} dateString */
+    function formatSchedule(dateString) {
+        if (!dateString) return 'TBA';
+        return new Date(dateString).toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+        });
     }
 </script>
 
@@ -134,6 +158,58 @@
                 {/if}
             </div>
         </div>
+
+        {#if (data.competitionEvents ?? []).length > 0}
+            <div class="mt-margin-desktop space-y-stack-lg">
+                <div class="bg-surface-container/80 backdrop-blur-3xl p-stack-lg relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary-fixed to-primary"></div>
+                    <div class="flex justify-between items-end mb-stack-lg gap-stack-md">
+                        <h2 class="font-headline-lg text-headline-lg text-white uppercase italic">Competition Event Statistics</h2>
+                        <span class="font-label-caps text-label-caps text-on-surface-variant mb-2 shrink-0">PROGRAM</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary">NAME</th>
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary">GENDER</th>
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary">AGE CATEGORY</th>
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary">ROUND</th>
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary">STATUS</th>
+                                    <th class="py-stack-sm font-label-caps text-label-caps text-primary text-right">SCHEDULE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                {#each (data.competitionEvents ?? []) as event}
+                                <tr class="group/row hover:bg-white/5 transition-colors" onclick={() => window.location.href = '#event-' + event.id}>
+                                    <td class="py-stack-md font-headline-md italic text-headline-md text-white uppercase hover:text-primary transition-colors">
+                                        <!-- <a href="#event-{event.id}" class="font-headline-md italic text-headline-md text-white uppercase hover:text-primary transition-colors"> -->
+                                            {event.name}
+                                        <!-- </a> -->
+                                        </td>
+                                            <td class="py-stack-md font-label-caps uppercase text-on-surface-variant">{event.gender ?? '---'}</td>
+                                            <td class="py-stack-md font-label-caps uppercase text-on-surface-variant">{event.age_category ?? '---'}</td>
+                                            <td class="py-stack-md font-label-caps uppercase text-on-surface-variant">{event.round_type ?? '---'}</td>
+                                            <td class="py-stack-md">
+                                                <span class="{eventStatusBadge(event.status).class} px-3 py-1 font-label-caps text-label-caps">
+                                                    {eventStatusBadge(event.status).label}
+                                                </span>
+                                            </td>
+                                            <td class="py-stack-md text-sm text-right font-body-md text-on-surface">{formatSchedule(event.scheduled_at)}</td>
+                                        </tr>
+                                        {/each}
+                                    </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {#each (data.competitionEvents ?? []) as event}
+                    <div id="event-{event.id}" class="scroll-mt-32">
+                        <CompetitionEventTable competitionEventId={event.id} title={event.name} />
+                    </div>
+                {/each}
+            </div>
+        {/if}
     {:else}
         <div class="text-center py-margin-desktop bg-surface-container-low border border-white/5">
             <p class="font-body-md text-on-surface-variant">This event listing may have been archived or removed from the league records.</p>

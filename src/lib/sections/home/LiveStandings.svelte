@@ -48,7 +48,7 @@
 			<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary-fixed to-primary"></div>
 			<div class="flex justify-between items-end mb-stack-lg">
 				<h2 class="font-headline-lg text-headline-lg text-white uppercase italic">Live Standings</h2>
-				<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">OVERALL RANKING</span>
+				<span class="font-label-caps text-label-caps capitalize text-on-surface-variant mb-2">Leaders of the league</span>
 			</div>
 			{#if rows.length > 0}
 				<div class="overflow-x-auto">

@@ -13,52 +13,43 @@
     }
 </script>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div class="md:flex md:items-center md:justify-between mb-10 border-b border-zinc-200 pb-5">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-2xl font-bold leading-7 text-zinc-900 sm:text-3xl sm:tracking-tight">
-                League Blog
-            </h1>
-            <p class="mt-1 text-sm text-zinc-500">News, updates, and stories from the V-League.</p>
+<div class="w-full px-margin-mobile lg:px-margin-desktop py-margin-desktop">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-stack-md">
+        <div>
+            <h1 class="font-headline-lg text-headline-lg text-white uppercase italic">League Blog</h1>
+            <p class="font-body-md text-on-surface-variant mt-2">News, updates, and stories from the V-League.</p>
         </div>
+        <span class="font-label-caps text-label-caps text-on-surface-variant mb-2 shrink-0">{data.blogs.length} ARTICLES</span>
     </div>
 
     {#if data.blogs.length > 0}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
             {#each data.blogs as post}
-                <a
-                    href="/blog/{post.slug}"
-                    class="group flex flex-col rounded-lg border border-zinc-200 bg-white overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                >
-                    {#if post.image_url}
-                        <div class="w-full h-48 overflow-hidden">
-                            <img src={post.image_url} alt={post.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        </div>
-                    {:else}
-                        <div class="w-full h-48 bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center">
-                            <svg class="w-12 h-12 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                            </svg>
-                        </div>
-                    {/if}
-                    <div class="flex-1 flex flex-col p-5">
-                        <p class="text-xs text-zinc-400 mb-2">{formatDate(post.published_at)}</p>
-                        <h2 class="text-base font-semibold text-zinc-900 group-hover:text-[#fb310f] transition-colors line-clamp-2">{post.title}</h2>
-                        {#if post.excerpt}
-                            <p class="mt-2 text-sm text-zinc-500 line-clamp-3 flex-1">{post.excerpt}</p>
+                <a href="/blog/{post.slug}" class="group cursor-pointer block">
+                    <div class="relative aspect-video overflow-hidden mb-stack-md">
+                        {#if post.image_url}
+                            <img src={post.image_url} alt={post.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        {:else}
+                            <div class="w-full h-full bg-surface-variant flex items-center justify-center transition-transform duration-700 group-hover:scale-110">
+                                <span class="material-symbols-outlined text-5xl text-outline">article</span>
+                            </div>
                         {/if}
-                        <p class="mt-3 text-xs text-zinc-400">By {post.author || 'V-League Staff'}</p>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 font-label-caps text-[10px] bg-primary text-on-primary px-2 py-1">ARTICLE</div>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm">{formatDate(post.published_at)} · {post.author || 'V-League Staff'}</p>
+                        <h3 class="font-headline-md text-headline-md text-white uppercase group-hover:text-primary transition-colors line-clamp-2">{post.title}</h3>
+                        {#if post.excerpt}
+                            <p class="font-body-md text-on-surface-variant mt-2 line-clamp-2">{post.excerpt}</p>
+                        {/if}
                     </div>
                 </a>
             {/each}
         </div>
     {:else}
-        <div class="text-center py-20 bg-white border border-zinc-200 rounded-lg">
-            <svg class="mx-auto w-12 h-12 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-            </svg>
-            <h3 class="mt-4 text-sm font-semibold text-zinc-900">No blog posts yet</h3>
-            <p class="mt-1 text-sm text-zinc-500">Check back soon for the latest league news and updates.</p>
+        <div class="text-center py-margin-desktop bg-surface-container-low border border-white/5">
+            <p class="font-body-md text-on-surface-variant">No articles published yet. Check back soon.</p>
         </div>
     {/if}
 </div>

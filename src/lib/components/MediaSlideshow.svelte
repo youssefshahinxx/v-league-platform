@@ -25,7 +25,7 @@
 </script>
 
 {#if slides.length > 0}
-	<div class="relative w-full overflow-hidden rounded-lg bg-zinc-900">
+	<div class="relative w-full overflow-hidden bg-zinc-900">
 		{#if isVideo(slides[currentIndex].url, slides[currentIndex].type)}
 			<!-- svelte-ignore a11y_media_has_caption -->
 			<video

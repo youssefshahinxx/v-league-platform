@@ -12,7 +12,7 @@
   --color-surface-variant: #323536;
   --color-on-primary-fixed: #001a41;
   --color-on-secondary-container: #556d00;
-  --color-primary: #EC5A5A;
+  --color-primary: #FF5A5F;
   --color-on-tertiary-fixed: #1c1b1b;
   --color-surface-container-highest: #323536;
   --color-surface-container-high: #282a2b;
@@ -118,4 +118,33 @@
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+/* Give every table column generous horizontal breathing room. */
+table th,
+table td {
+    padding-left: var(--spacing-stack-md);
+    padding-right: var(--spacing-stack-md);
+}
+
+/* Scale every design-token font size down on small screens. */
+@media (max-width: 639.98px) {
+    :root {
+        --text-body-lg: 15px;
+        --text-body-lg--line-height: 22px;
+        --text-body-md: 14px;
+        --text-body-md--line-height: 20px;
+        --text-label-caps: 10px;
+        --text-label-caps--line-height: 14px;
+        --text-headline-lg: 32px;
+        --text-headline-lg--line-height: 36px;
+        --text-headline-lg-mobile: 24px;
+        --text-headline-lg-mobile--line-height: 28px;
+        --text-headline-md: 18px;
+        --text-headline-md--line-height: 24px;
+        --text-stats-number: 24px;
+        --text-stats-number--line-height: 28px;
+        --text-display-xl: 52px;
+        --text-display-xl--line-height: 56px;
+    }
 }
