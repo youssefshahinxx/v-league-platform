@@ -8,7 +8,7 @@
 	/** @type {HTMLElement | undefined} */
 	let el;
 	/** @type {HTMLElement | undefined} */
-	let scrollContainer;
+	let scrollContainer = $state(undefined);
 
 	/** @param {string} dateString */
 	function formatDate(dateString) {
@@ -61,7 +61,7 @@
 		<div bind:this={scrollContainer} class="flex gap-gutter overflow-x-auto pb-stack-lg px-margin-mobile lg:px-margin-desktop no-scrollbar scroll-smooth">
 			{#each events as event}
 				<a href="/competitions/{event.id}" class="min-w-[320px] md:min-w-[400px] bg-surface-container-high group hover:bg-surface-variant transition-all block">
-					<div class="h-48 relative overflow-hidden">
+					<div class="h-48 w-full relative overflow-hidden">
 						{#if event.image_url}
 							<img src={event.image_url} alt={event.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
 						{:else}

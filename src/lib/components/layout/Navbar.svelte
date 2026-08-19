@@ -17,18 +17,18 @@
 </script>
 
 <header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-2xl border-b border-white/5">
-	<div class="h-20 w-full px-margin-mobile lg:px-margin-desktop flex items-center justify-between">
+	<div class="h-20 md:h-28 w-full px-margin-mobile lg:px-margin-desktop flex items-center justify-between">
 		<div class="flex items-center gap-4">
 			<a href='/' >
 				<img
-				src="/assets/Adobe Express - file (1).png"
+				src="assets/V-LOGO.png"
 				alt="Athletics League Logo"
-				class="h-full w-50 object-contain"
+				class="h-full w-10 md:w-20 rounded-full object-contain"
 				/>
 			</a>
-			<!-- <a href="/" class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block">
+			<a href="/" class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block">
 				Athletics League
-			</a> -->
+			</a>
 		</div>
 		<nav class="hidden lg:flex items-center gap-stack-lg">
 			{#each navLinks as link}
@@ -50,7 +50,7 @@
 				<a href="/profile/edit" class="w-8 h-8 rounded-full flex items-center justify-center">
 					<span class="material-symbols-outlined text-on-primary text-40">person</span>
 				</a>
-				<button onclick={handleLogout} class="text-md font-bold text-primary hover:text-on-surface transition-colors cursor-pointer">
+				<button onclick={handleLogout} class="text-xs font-bold text-primary hover:text-on-surface transition-colors cursor-pointer">
 					Logout
 				</button>
 			{/if}
