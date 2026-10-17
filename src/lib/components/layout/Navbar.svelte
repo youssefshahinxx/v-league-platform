@@ -21,7 +21,7 @@
 		<div class="flex items-center gap-4">
 			<a href='/' >
 				<img
-				src="assets/V-LOGO.png"
+				src="/assets/vleague.jpg"
 				alt="Athletics League Logo"
 				class="h-full w-10 md:w-20 rounded-full object-contain"
 				/>

@@ -1,50 +1,152 @@
 <script>
+    import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
     import { page } from '$app/stores';
     import { formatCompetitionDateLong } from '$lib/utils/ui';
-    import { registerForCompetition } from '$lib/utils/competitionRegistration';
     import MediaSlideshow from '$lib/components/MediaSlideshow.svelte';
     import CompetitionEventTable from '$lib/components/CompetitionEventTable.svelte';
 
-    /** @type {{ data: { competition: any, competitionEvents: Array<any>, userHasRegistered: boolean, isLoggedIn: boolean, session: any } }} */
+    /** @type {{ data: { competition: any, competitionEvents: Array<any>, userRegistrations: Array<any>, userHasRegistered: boolean, isLoggedIn: boolean } }} */
     let { data } = $props();
 
+    const registeredEventIds = $derived(new Set((data.userRegistrations ?? []).map((registration) => registration.competition_event_id)));
+
     let hasRegistered = $state(false);
-    let isProcessing = $state(false);
+    let isCreatingPayment = $state(false);
+    let isConfirming = $state(false);
     let feedbackMessage = $state('');
+    /** @type {string[]} */
+    let selectedEventIds = $state([]);
 
     $effect(() => {
         hasRegistered = data.userHasRegistered ?? false;
     });
 
-    /** @param {Event} e */
-    async function handleRegistration(e) {
-        e.preventDefault();
+    const selectableEvents = $derived(
+        (data.competitionEvents ?? []).filter(
+            (event) => event.status === 'scheduled' && event.registration_open !== false && !registeredEventIds.has(event.id)
+        )
+    );
+
+    const totalCents = $derived(
+        selectableEvents.reduce(
+            (sum, event) => (selectedEventIds.includes(event.id) ? sum + Math.round(Number(event.price ?? 0) * 100) : sum),
+            0
+        )
+    );
+
+    const totalEgp = $derived((totalCents / 100).toFixed(2));
+
+    /** @param {string} eventId */
+    function toggleEvent(eventId) {
+        if (isCreatingPayment || isConfirming) return;
+        selectedEventIds = selectedEventIds.includes(eventId)
+            ? selectedEventIds.filter((id) => id !== eventId)
+            : [...selectedEventIds, eventId];
+        feedbackMessage = '';
+    }
+
+    /** @param {string} price */
+    function formatPrice(price) {
+        return `${Number(price ?? 0).toFixed(2)} EGP`;
+    }
+
+    async function handlePayment() {
+        feedbackMessage = '';
         if (!data.isLoggedIn) {
             feedbackMessage = 'You must be signed in to register for competitions.';
             return;
         }
-
-        isProcessing = true;
-        feedbackMessage = '';
-
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.user) {
-            feedbackMessage = 'Authentication session lost. Please re-login.';
-            isProcessing = false;
+        if (selectedEventIds.length === 0) {
+            feedbackMessage = 'Select at least one event to register.';
             return;
         }
 
-        const competitionId = $page.params.id;
-        const result = await registerForCompetition(competitionId ?? '', session.user.id);
-        isProcessing = false;
-
-        if (result.success) {
-            hasRegistered = true;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+            feedbackMessage = 'Authentication session lost. Please re-login.';
+            return;
         }
 
-        feedbackMessage = result.message;
+        isCreatingPayment = true;
+
+        try {
+            const response = await fetch('/api/paymob/create-intention', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${session.access_token}`
+                },
+                body: JSON.stringify({
+                    competitionId: $page.params.id,
+                    eventIds: selectedEventIds
+                })
+            });
+
+            const result = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                feedbackMessage = result?.message ?? 'Payment setup failed. Please try again.';
+                return;
+            }
+
+            if (result.checkoutUrl) {
+                window.location.href = result.checkoutUrl;
+                return;
+            }
+
+            if (result.free) {
+                feedbackMessage = 'Success! You are officially locked in.';
+                hasRegistered = true;
+                return;
+            }
+        } catch {
+            feedbackMessage = 'Network error while contacting the payment service.';
+        } finally {
+            isCreatingPayment = false;
+        }
     }
+
+    onMount(() => {
+        const params = $page.url.searchParams;
+        if (params.get('payment') !== 'success') return;
+
+        const orderId = params.get('order');
+        if (!orderId) return;
+
+        isConfirming = true;
+
+        let attempts = 0;
+
+        const poll = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            const { data: rows } = session?.user
+                ? await supabase.from('registrations').select('id').eq('order_id', orderId).eq('profile_id', session.user.id)
+                : { data: [] };
+
+            attempts += 1;
+
+            if ((rows ?? []).length > 0 || attempts > 12) {
+                isConfirming = false;
+
+                const url = new URL(window.location.href);
+                url.searchParams.delete('payment');
+                url.searchParams.delete('order');
+                history.replaceState(null, '', url.pathname + url.search);
+
+                if ((rows ?? []).length > 0) {
+                    hasRegistered = true;
+                } else {
+                    feedbackMessage = 'Payment confirmation is taking longer than expected. Your entry will be confirmed automatically once Paymob processes it.';
+                }
+                return;
+            }
+
+            setTimeout(poll, 2500);
+        };
+
+        poll();
+    });
 
     /** @param {string} status */
     function statusBadge(status) {
@@ -120,12 +222,7 @@
             <div class="lg:col-span-1 bg-surface-container-low p-stack-lg space-y-stack-md lg:sticky lg:top-24">
                 <div>
                     <h3 class="font-headline-md text-headline-md text-white uppercase">Entry</h3>
-                    <p class="font-body-md text-on-surface-variant mt-stack-sm">Secure your competitive slot instantly.</p>
-                </div>
-
-                <div class="border-t border-white/5 pt-stack-md flex items-baseline justify-between">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">Pass Price</span>
-                    <span class="font-stats-number text-stats-number text-white">${data.competition.ticket_price ?? 0}</span>
+                    <p class="font-body-md text-on-surface-variant mt-stack-sm">Select your events and secure your slot instantly.</p>
                 </div>
 
                 {#if feedbackMessage}
@@ -134,11 +231,7 @@
                     </div>
                 {/if}
 
-                {#if hasRegistered}
-                    <div class="w-full text-center bg-secondary-fixed text-on-secondary px-stack-md py-stack-sm font-label-caps text-label-caps">
-                        ✓ CONFIRMED COMPETITOR
-                    </div>
-                {:else if data.competition.status === 'completed'}
+                {#if data.competition.status === 'completed'}
                     <div class="w-full text-center bg-surface-container text-on-surface-variant px-stack-md py-stack-sm font-label-caps text-label-caps">
                         EVENT COMPLETED
                     </div>
@@ -146,15 +239,59 @@
                     <div class="w-full text-center bg-surface-container text-on-surface-variant px-stack-md py-stack-sm font-label-caps text-label-caps">
                         REGISTRATION CLOSED
                     </div>
+                {:else if (data.competitionEvents ?? []).length === 0}
+                    <p class="font-body-md text-on-surface-variant">No events are scheduled for this competition yet.</p>
                 {:else}
-                    <button
-                        type="button"
-                        onclick={handleRegistration}
-                        disabled={isProcessing}
-                        class="w-full text-center bg-primary hover:bg-primary/90 text-on-primary px-stack-md py-stack-sm font-label-caps text-label-caps transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
-                    >
-                        {isProcessing ? 'PROCESSING...' : 'CONFIRM ENTRY SPOT'}
-                    </button>
+                    <div class="border-t border-white/5 pt-stack-md space-y-stack-sm">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant">SELECT EVENTS</span>
+                        {#each (data.competitionEvents ?? []) as event}
+                            {#if registeredEventIds.has(event.id)}
+                                <div class="flex items-center justify-between gap-stack-md p-stack-sm bg-surface-container/60 border border-white/5 opacity-70">
+                                    <span class="font-body-md text-on-surface-variant truncate">{event.name}</span>
+                                    <span class="font-label-caps text-label-caps text-secondary-fixed shrink-0">REGISTERED</span>
+                                </div>
+                            {:else if event.status === 'scheduled' && event.registration_open !== false}
+                                <button
+                                    type="button"
+                                    onclick={() => toggleEvent(event.id)}
+                                    disabled={isCreatingPayment || isConfirming}
+                                    class="w-full flex items-center justify-between gap-stack-md p-stack-sm border transition-colors text-left cursor-pointer disabled:opacity-50 {selectedEventIds.includes(event.id) ? 'border-primary bg-primary/10' : 'border-white/10 hover:border-white/25'}"
+                                >
+                                    <span class="flex items-center gap-stack-md min-w-0">
+                                        <span class="w-4 h-4 flex-shrink-0 border flex items-center justify-center {selectedEventIds.includes(event.id) ? 'border-primary bg-primary' : 'border-white/30'}">
+                                            {#if selectedEventIds.includes(event.id)}
+                                                <svg class="w-3 h-3 text-on-primary" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                </svg>
+                                            {/if}
+                                        </span>
+                                        <span class="font-body-md text-white truncate">{event.name}</span>
+                                    </span>
+                                    <span class="font-body-md text-on-surface-variant shrink-0">{formatPrice(event.price)}</span>
+                                </button>
+                            {/if}
+                        {/each}
+                    </div>
+
+                    <div class="border-t border-white/5 pt-stack-md flex items-baseline justify-between">
+                        <span class="font-label-caps text-label-caps text-on-surface-variant">Total</span>
+                        <span class="font-stats-number text-stats-number text-white">{totalEgp} EGP</span>
+                    </div>
+
+                    {#if hasRegistered}
+                        <div class="w-full text-center bg-secondary-fixed text-on-secondary px-stack-md py-stack-sm font-label-caps text-label-caps">
+                            ✓ CONFIRMED COMPETITOR
+                        </div>
+                    {:else}
+                        <button
+                            type="button"
+                            onclick={handlePayment}
+                            disabled={isCreatingPayment || isConfirming || selectedEventIds.length === 0}
+                            class="w-full text-center bg-primary hover:bg-primary/90 text-on-primary px-stack-md py-stack-sm font-label-caps text-label-caps transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
+                        >
+                            {isCreatingPayment ? 'PROCESSING...' : isConfirming ? 'CONFIRMING PAYMENT...' : `PAY ${totalEgp} EGP`}
+                        </button>
+                    {/if}
                 {/if}
             </div>
         </div>
@@ -195,7 +332,7 @@
                                                     {eventStatusBadge(event.status).label}
                                                 </span>
                                             </td>
-                                            <td class="py-stack-md text-sm text-right font-body-md text-on-surface">{formatSchedule(event.scheduled_at)}</td>
+                                            <td class="py-stack-md text-sm text-right uppercase font-bold font-body-md text-on-surface">{formatSchedule(event.scheduled_at)}</td>
                                         </tr>
                                         {/each}
                                     </tbody>

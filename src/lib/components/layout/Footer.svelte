@@ -7,9 +7,9 @@
         <div class="space-y-stack-md">
             <div class="flex items-center gap-4">
                 <img
-                    src="/assets/V-LOGO.png"
+                    src="/assets/vleague.jpg"
                     alt="Athletics League Logo"
-                    class="h-6 w-auto object-contain"
+                    class="h-16 w-auto rounded-full object-contain"
                 />
                 <span class="font-headline-md text-headline-md text-on-surface">AL</span>
             </div>
