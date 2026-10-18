@@ -392,9 +392,3 @@ It powers:
 - how secure payment data is tracked and confirmed
 
 The server routes make sure all of that is validated correctly before changes are committed.
-
-## 9) Recommended next step
-
-If you want, I can turn this into:
-1. a more formal backend documentation page for your project, or
-2. a database schema blueprint showing the exact tables and columns this app likely needs.
