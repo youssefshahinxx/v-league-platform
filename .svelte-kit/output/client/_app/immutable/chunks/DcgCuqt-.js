@@ -1,0 +1,1 @@
+import{t as e}from"./C76K5oAL.js";async function t(e,t=null,n=`Supabase query`){try{let r=await e;return r?.error?(console.error(n,r.error),t):r?.data??t}catch(e){return console.error(n,e),t}}function n(t,n=`*`){return e.from(t).select(n)}export{t as n,n as t};

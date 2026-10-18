@@ -1,0 +1,1 @@
+import{Y as e}from"./B5rGtrZR.js";e();
