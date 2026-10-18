@@ -1,0 +1,1000 @@
+<!DOCTYPE html><html lang="en"
+    ><head
+        ><meta charset="utf-8" /><meta
+            content="width=device-width, initial-scale=1.0"
+            name="viewport"
+        /><style>
+            @layer base {
+                html,
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+                body {
+                    overscroll-behavior: none;
+                }
+                main > :first-child {
+                    margin-top: 0 !important;
+                }
+                main > :last-child {
+                    margin-bottom: 0 !important;
+                }
+            }
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        </style><script src="https://cdn.tailwindcss.com"></script><script
+            id="tailwind-config"
+        >
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "on-primary-container": "#00285b",
+                            "surface-container": "#1d2021",
+                            "tertiary-fixed-dim": "#c9c6c5",
+                            tertiary: "#c9c6c5",
+                            "surface-variant": "#323536",
+                            "on-primary-fixed": "#001a41",
+                            "on-secondary-container": "#556d00",
+                            primary: "#adc7ff",
+                            "on-tertiary-fixed": "#1c1b1b",
+                            "surface-container-highest": "#323536",
+                            "surface-container-high": "#282a2b",
+                            "surface-container-low": "#191c1d",
+                            "inverse-surface": "#e1e3e4",
+                            "primary-container": "#4a8eff",
+                            "on-secondary": "#283500",
+                            "on-error-container": "#ffdad6",
+                            "tertiary-fixed": "#e5e2e1",
+                            "inverse-primary": "#005bc0",
+                            outline: "#8b90a0",
+                            "secondary-fixed-dim": "#abd600",
+                            background: "#111415",
+                            "on-surface": "#e1e3e4",
+                            "on-primary": "#002e68",
+                            "primary-fixed-dim": "#adc7ff",
+                            "surface-container-lowest": "#0c0f10",
+                            "on-error": "#690005",
+                            "surface-bright": "#373a3b",
+                            "secondary-fixed": "#c3f400",
+                            "on-secondary-fixed": "#161e00",
+                            secondary: "#ffffff",
+                            "outline-variant": "#414754",
+                            "surface-tint": "#adc7ff",
+                            "primary-fixed": "#d8e2ff",
+                            "on-primary-fixed-variant": "#004493",
+                            "error-container": "#93000a",
+                            "on-tertiary-container": "#2a2a29",
+                            surface: "#111415",
+                            "tertiary-container": "#929090",
+                            error: "#ffb4ab",
+                            "on-secondary-fixed-variant": "#3c4d00",
+                            "on-tertiary-fixed-variant": "#474646",
+                            "on-surface-variant": "#c1c6d7",
+                            "on-background": "#e1e3e4",
+                            "surface-dim": "#111415",
+                            "secondary-container": "#c3f400",
+                            "on-tertiary": "#313030",
+                            "inverse-on-surface": "#2e3132",
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.25rem",
+                            lg: "0.5rem",
+                            xl: "0.75rem",
+                            full: "9999px",
+                        },
+                        spacing: {
+                            gutter: "24px",
+                            "stack-lg": "40px",
+                            "stack-sm": "8px",
+                            "margin-mobile": "20px",
+                            "margin-desktop": "64px",
+                            unit: "4px",
+                            "stack-md": "16px",
+                        },
+                        fontFamily: {
+                            "body-lg": ["Inter"],
+                            "body-md": ["Inter"],
+                            "label-caps": ["Space Grotesk"],
+                            "headline-lg": ["Anton"],
+                            "stats-number": ["Anton"],
+                            "display-xl": ["Anton"],
+                            "headline-lg-mobile": ["Anton"],
+                            "headline-md": ["Anton"],
+                        },
+                        fontSize: {
+                            "body-lg": [
+                                "18px",
+                                { lineHeight: "28px", fontWeight: "400" },
+                            ],
+                            "body-md": [
+                                "16px",
+                                { lineHeight: "24px", fontWeight: "400" },
+                            ],
+                            "label-caps": [
+                                "12px",
+                                {
+                                    lineHeight: "16px",
+                                    letterSpacing: "0.1em",
+                                    fontWeight: "700",
+                                },
+                            ],
+                            "headline-lg": [
+                                "48px",
+                                {
+                                    lineHeight: "48px",
+                                    letterSpacing: "0.02em",
+                                    fontWeight: "400",
+                                },
+                            ],
+                            "stats-number": [
+                                "32px",
+                                { lineHeight: "32px", fontWeight: "400" },
+                            ],
+                            "display-xl": [
+                                "80px",
+                                {
+                                    lineHeight: "80px",
+                                    letterSpacing: "-0.02em",
+                                    fontWeight: "400",
+                                },
+                            ],
+                            "headline-lg-mobile": [
+                                "32px",
+                                { lineHeight: "32px", fontWeight: "400" },
+                            ],
+                            "headline-md": [
+                                "24px",
+                                {
+                                    lineHeight: "28px",
+                                    letterSpacing: "0.05em",
+                                    fontWeight: "400",
+                                },
+                            ],
+                        },
+                    },
+                },
+            };
+        </script><link
+            href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@700&amp;display=swap"
+            rel="stylesheet"
+        /><link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet"
+        /></head
+    ><body class="bg-background font-body-md text-on-surface dark"
+        ><header
+            class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-2xl border-b border-white/5"
+        >
+            <div
+                class="h-16 w-full px-margin-mobile lg:px-margin-desktop flex items-center justify-between"
+            >
+                <div class="flex items-center gap-4">
+                    <img
+                        alt="Athletics League Logo"
+                        class="h-8 w-auto object-contain"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoFHvz0pY1SeSg_3GXUC0j0WiU2YuchDdDvw5nHfGWZfTR21xQE9IqN6bUFX3cfwpKqRtQ2n7ZJlfRn0XJFW6tPSGppPijosjNL5fKLJhVNgwQwRARvZPMKr4KJehWjD81075L_D27iJT3-N7HbWD5hxaTurBTg0kfTmM7Bhvbqp1Q0WRrr7efpsD2drT5fAnJ0Xhi9Vl49wH7rw3POLGoeafxQBhAOmD3IQ6fmgLB7I4XuvZeSYmeoA"
+                    /><span
+                        class="font-headline-md text-headline-md text-primary tracking-wider uppercase hidden sm:block"
+                        >Athletics League</span
+                    >
+                </div>
+                <nav
+                    class="hidden lg:flex items-center gap-stack-lg"
+                    data-active-classes="text-primary font-bold border-b-2 border-primary pb-1"
+                >
+                    <a
+                        aria-current="page"
+                        class="transition-all text-primary font-bold border-b-2 border-primary pb-1"
+                        data-path="standings"
+                        href="#">Standings</a
+                    ><a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
+                        data-path="schedule"
+                        href="#">Schedule</a
+                    ><a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
+                        data-path="athletes"
+                        href="#">Athletes</a
+                    ><a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
+                        data-path="news"
+                        href="#">News</a
+                    ><a
+                        class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all"
+                        data-path="tickets"
+                        href="#">Tickets</a
+                    >
+                </nav>
+                <div class="flex items-center gap-stack-md">
+                    <button
+                        class="p-unit hover:bg-surface-container rounded-full transition-colors"
+                        ><span class="material-symbols-outlined text-on-surface"
+                            >search</span
+                        ></button
+                    >
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"
+                    >
+                        <span
+                            class="material-symbols-outlined text-on-primary text-[18px]"
+                            >person</span
+                        >
+                    </div>
+                    <button class="lg:hidden p-unit"
+                        ><span class="material-symbols-outlined text-on-surface"
+                            >menu</span
+                        ></button
+                    >
+                </div>
+            </div>
+        </header>
+        <main class="w-full pt-16 min-h-screen">
+            <div class="flex flex-col w-full overflow-x-hidden bg-background">
+                <!-- Hero Section -->
+                <section
+                    class="relative min-h-[90vh] flex items-center -mt-16 pt-16 overflow-hidden transition-all duration-1000 opacity-100"
+                >
+                    <div class="absolute inset-0 z-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10"
+                        ></div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"
+                        ></div>
+                        <img
+                            alt="Elite athletes in mid-sprint"
+                            class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCNxlOGZOI3hhCEG-p2ktXCzjxEHzrxXDF_AeJrPS0s1bKVQGHsjyB1W89M9mOUdiqvDYtJiAiAJSfIyf53w-wqIvfLA6SAzKAZ74-2Q4aSDg4a3G0fcc0nJRN4cqzkYHlLN_zIrMzWF2ixTTeNp93U1h-2_tfCSQRhR42Aa6MdCSPbXJNmJP6IAP61ORj2jy5b7WzHPe5a2_zC2oRSdgBR463HXs7W5Vf_JShGafVnhrs-xlZ3AMM2A"
+                        />
+                    </div>
+                    <div
+                        class="relative z-20 w-full px-margin-mobile lg:px-margin-desktop"
+                    >
+                        <div class="max-w-4xl space-y-stack-md">
+                            <div
+                                class="flex items-center gap-stack-sm animate-pulse"
+                            >
+                                <span
+                                    class="w-3 h-3 bg-secondary-fixed rounded-full"
+                                ></span>
+                                <span
+                                    class="font-label-caps text-label-caps text-secondary-fixed uppercase tracking-widest"
+                                    >Live: World Championships Qualifiers</span
+                                >
+                            </div>
+                            <h1
+                                class="font-display-xl text-display-xl text-white uppercase italic leading-[0.9] tracking-tighter"
+                            >
+                                THE SPEED OF<br />
+                                <span class="text-primary"
+                                    >KINETIC VELOCITY</span
+                                >
+                            </h1>
+                            <p
+                                class="font-body-lg text-body-lg text-on-surface-variant max-w-xl"
+                            >
+                                Experience the world's premier athletics league.
+                                Witness the raw power of human potential as
+                                elite athletes shatter records in
+                                high-definition speed.
+                            </p>
+                            <div class="flex flex-wrap gap-gutter pt-stack-md">
+                                <button
+                                    class="bg-primary hover:bg-primary/90 text-on-primary px-10 py-4 font-label-caps text-label-caps transition-all transform hover:scale-105 active:scale-95"
+                                >
+                                    WATCH LIVE
+                                </button>
+                                <button
+                                    class="border-2 border-secondary-fixed text-secondary-fixed hover:bg-secondary-fixed hover:text-on-secondary px-10 py-4 font-label-caps text-label-caps transition-all transform hover:scale-105"
+                                >
+                                    VIEW STANDINGS
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative Speed Lines -->
+                    <div
+                        class="absolute bottom-20 right-0 w-1/3 h-px bg-gradient-to-l from-primary to-transparent opacity-50"
+                    ></div>
+                    <div
+                        class="absolute bottom-24 right-0 w-1/4 h-px bg-gradient-to-l from-secondary-fixed to-transparent opacity-30"
+                    ></div>
+                </section>
+                <!-- Live Standings & Motion Section -->
+                <section
+                    class="relative z-30 -mt-20 px-margin-mobile lg:px-margin-desktop transition-all duration-1000 opacity-100"
+                >
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+                        <!-- Table Container -->
+                        <div
+                            class="lg:col-span-8 bg-surface-container/80 backdrop-blur-3xl p-stack-lg relative overflow-hidden group"
+                        >
+                            <div
+                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary-fixed to-primary"
+                            ></div>
+                            <div
+                                class="flex justify-between items-end mb-stack-lg"
+                            >
+                                <h2
+                                    class="font-headline-lg text-headline-lg text-white uppercase italic"
+                                >
+                                    Live Standings
+                                </h2>
+                                <span
+                                    class="font-label-caps text-label-caps text-on-surface-variant mb-2"
+                                    >MEN'S 100M SPRINT</span
+                                >
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b border-white/10">
+                                            <th
+                                                class="py-stack-sm font-label-caps text-label-caps text-primary"
+                                                >RANK</th
+                                            >
+                                            <th
+                                                class="py-stack-sm font-label-caps text-label-caps text-primary"
+                                                >ATHLETE</th
+                                            >
+                                            <th
+                                                class="py-stack-sm font-label-caps text-label-caps text-primary"
+                                                >NATION</th
+                                            >
+                                            <th
+                                                class="py-stack-sm font-label-caps text-label-caps text-primary text-right"
+                                                >TIME</th
+                                            >
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-white/5">
+                                        <tr
+                                            class="group/row hover:bg-white/5 transition-colors"
+                                        >
+                                            <td
+                                                class="py-stack-md font-stats-number text-stats-number text-secondary-fixed italic"
+                                                >01</td
+                                            >
+                                            <td
+                                                class="py-stack-md flex items-center gap-stack-md"
+                                            >
+                                                <div
+                                                    class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20"
+                                                >
+                                                    <img
+                                                        class="w-full h-full object-cover"
+                                                        data-alt="Close up portrait of Marcus Bolt, a professional American sprinter with a focused expression, athletic build, short hair, wearing a team USA jersey, dramatic side lighting."
+                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwGWG8L2yAAMGLUc6u22xlWJHHXVoKWwSNJ9YYZ8VkjBQIvC5mKcuS5eWnbfo5-8yEaebmkjWRYdLCwfPBXvTYN6tIe6PDvSKg8QEFxDKukb-dy7G32bgsS1uDhDRFoaZ8jANQWObElcQE9x94CsS_LYbub3MOuaqgOrN_rUyIYXaHSDT_PBnPpk_XKX7UBCzmjOMQdZ3Nc6P6nje0tC_N2KvK16E8KPUM-jsFDOBOhNsE5_8z5J_cBw"
+                                                    />
+                                                </div>
+                                                <span
+                                                    class="font-headline-md text-headline-md text-white uppercase"
+                                                    >Marcus Bolt</span
+                                                >
+                                            </td>
+                                            <td
+                                                class="py-stack-md text-on-surface-variant font-label-caps"
+                                                >USA</td
+                                            >
+                                            <td
+                                                class="py-stack-md text-right font-stats-number text-stats-number text-white"
+                                                >9.81s</td
+                                            >
+                                        </tr>
+                                        <tr
+                                            class="group/row hover:bg-white/5 transition-colors"
+                                        >
+                                            <td
+                                                class="py-stack-md font-stats-number text-stats-number text-on-surface-variant italic"
+                                                >02</td
+                                            >
+                                            <td
+                                                class="py-stack-md flex items-center gap-stack-md"
+                                            >
+                                                <div
+                                                    class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20"
+                                                >
+                                                    <img
+                                                        class="w-full h-full object-cover"
+                                                        data-alt="Portrait of Andre DeGrasse, Canadian sprinter, professional sports lighting, stadium background, wearing Canada track uniform, calm and determined look."
+                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9PBArc4vJFFieEN151Dzd5k4zAWhk5CBvbePXoHZknkQePgbZJCyxSXlX4WZ6N6xqCENGYkJwg4PLrph5D3_YMY2pfpR6XPNbZKE_v944mY1PVCCeNXC_iAtsUw0-PmvOZKXpWN2QATtDbFQb_PmsR0tE3MUBM9ItSlnvOvVU4GeaSzv8pv1dgZVXLsT7KwpeADJrZ3JuFJRSeBwL5cVstvJOorVpEoAT0W8KtNswbSDafYFd9-suEg"
+                                                    />
+                                                </div>
+                                                <span
+                                                    class="font-headline-md text-headline-md text-white uppercase"
+                                                    >Andre DeGrasse</span
+                                                >
+                                            </td>
+                                            <td
+                                                class="py-stack-md text-on-surface-variant font-label-caps"
+                                                >CAN</td
+                                            >
+                                            <td
+                                                class="py-stack-md text-right font-stats-number text-stats-number text-white"
+                                                >9.89s</td
+                                            >
+                                        </tr>
+                                        <tr
+                                            class="group/row hover:bg-white/5 transition-colors"
+                                        >
+                                            <td
+                                                class="py-stack-md font-stats-number text-stats-number text-on-surface-variant italic"
+                                                >03</td
+                                            >
+                                            <td
+                                                class="py-stack-md flex items-center gap-stack-md"
+                                            >
+                                                <div
+                                                    class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20"
+                                                >
+                                                    <img
+                                                        class="w-full h-full object-cover"
+                                                        data-alt="Portrait of Fred Kerley, American sprinter, intense gaze, muscular physique, track stadium environment, dusk lighting with highlights on skin."
+                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5bMzn6t6ZHJXgOgCuy6Ie3RiWhewoj11RuiuZTcqCYYiDPtN7Ai8C7kjNmRLjMAEvebbvDiKwOI6mTqQGdwAwIDjPNLEVU0Qb_2T8EPtb2K9TEZJ5_z_vOfm5OlIXKumP4qBe6lNYEhm8U31NqBNkIvak6vPWIf3aisiYgiDfKJXbESAlpzvKHzWM4cYu1PoK0R09JvxFmsCaqQa1hy1ytwKhuwbsf8NV5n_4BrgHnhv_6q_EeVfH4g"
+                                                    />
+                                                </div>
+                                                <span
+                                                    class="font-headline-md text-headline-md text-white uppercase"
+                                                    >Fred Kerley</span
+                                                >
+                                            </td>
+                                            <td
+                                                class="py-stack-md text-on-surface-variant font-label-caps"
+                                                >USA</td
+                                            >
+                                            <td
+                                                class="py-stack-md text-right font-stats-number text-stats-number text-white"
+                                                >9.94s</td
+                                            >
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Quick Stats / Decorative Card -->
+                        <div class="lg:col-span-4 flex flex-col gap-gutter">
+                            <div
+                                class="bg-primary p-stack-lg flex flex-col justify-between aspect-square lg:aspect-auto h-full relative overflow-hidden group"
+                            >
+                                <div
+                                    class="absolute -right-10 -bottom-10 opacity-10 group-hover:scale-110 transition-transform duration-700"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[200px] text-on-primary"
+                                        >timer</span
+                                    >
+                                </div>
+                                <h3
+                                    class="font-label-caps text-label-caps text-on-primary uppercase tracking-widest"
+                                >
+                                    Next World Record Chase
+                                </h3>
+                                <div>
+                                    <p
+                                        class="font-display-xl text-display-xl text-on-primary italic leading-none"
+                                    >
+                                        9.58
+                                    </p>
+                                    <p
+                                        class="font-label-caps text-label-caps text-on-primary-container mt-2"
+                                    >
+                                        BOLT'S LEGACY STANDS
+                                    </p>
+                                </div>
+                                <button
+                                    class="bg-on-primary text-primary px-stack-md py-stack-sm font-label-caps text-label-caps w-fit"
+                                    >HISTORY HUB</button
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Upcoming Events - Horizontal Scroll -->
+                <section
+                    class="py-margin-desktop bg-surface-container-lowest transition-all duration-1000 opacity-100"
+                >
+                    <div
+                        class="px-margin-mobile lg:px-margin-desktop mb-stack-lg flex justify-between items-center"
+                    >
+                        <h2
+                            class="font-headline-lg text-headline-lg text-white uppercase italic"
+                        >
+                            Upcoming Events
+                        </h2>
+                        <div class="flex gap-stack-sm">
+                            <button
+                                class="p-2 border border-white/10 hover:bg-primary hover:text-on-primary transition-all"
+                                ><span class="material-symbols-outlined"
+                                    >arrow_back</span
+                                ></button
+                            >
+                            <button
+                                class="p-2 border border-white/10 hover:bg-primary hover:text-on-primary transition-all"
+                                ><span class="material-symbols-outlined"
+                                    >arrow_forward</span
+                                ></button
+                            >
+                        </div>
+                    </div>
+                    <div
+                        class="flex gap-gutter overflow-x-auto pb-stack-lg px-margin-mobile lg:px-margin-desktop no-scrollbar scroll-smooth"
+                    >
+                        <!-- Event Card 1 -->
+                        <div
+                            class="min-w-[320px] md:min-w-[400px] bg-surface-container-high group hover:bg-surface-variant transition-all cursor-pointer"
+                        >
+                            <div class="h-48 relative overflow-hidden">
+                                <div
+                                    class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-location="Tokyo, Japan"
+                                ></div>
+                                <div
+                                    class="absolute top-4 left-4 bg-secondary-fixed text-on-secondary px-3 py-1 font-label-caps text-label-caps"
+                                >
+                                    MAY 15
+                                </div>
+                            </div>
+                            <div class="p-stack-lg space-y-stack-sm">
+                                <h4
+                                    class="font-headline-md text-headline-md text-white uppercase"
+                                >
+                                    Golden Grand Prix
+                                </h4>
+                                <p class="font-body-md text-on-surface-variant">
+                                    Japan National Stadium, Tokyo
+                                </p>
+                                <div class="pt-stack-md">
+                                    <button
+                                        class="w-full border border-primary text-primary py-stack-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all"
+                                        >BUY TICKETS</button
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Event Card 2 -->
+                        <div
+                            class="min-w-[320px] md:min-w-[400px] bg-surface-container-high group hover:bg-surface-variant transition-all cursor-pointer"
+                        >
+                            <div class="h-48 relative overflow-hidden">
+                                <div
+                                    class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-location="Oslo, Norway"
+                                ></div>
+                                <div
+                                    class="absolute top-4 left-4 bg-secondary-fixed text-on-secondary px-3 py-1 font-label-caps text-label-caps"
+                                >
+                                    JUN 02
+                                </div>
+                            </div>
+                            <div class="p-stack-lg space-y-stack-sm">
+                                <h4
+                                    class="font-headline-md text-headline-md text-white uppercase"
+                                >
+                                    Diamond League
+                                </h4>
+                                <p class="font-body-md text-on-surface-variant">
+                                    Bislett Stadium, Oslo
+                                </p>
+                                <div class="pt-stack-md">
+                                    <button
+                                        class="w-full border border-primary text-primary py-stack-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all"
+                                        >BUY TICKETS</button
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Event Card 3 -->
+                        <div
+                            class="min-w-[320px] md:min-w-[400px] bg-surface-container-high group hover:bg-surface-variant transition-all cursor-pointer"
+                        >
+                            <div class="h-48 relative overflow-hidden">
+                                <div
+                                    class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    data-location="Heusden, Belgium"
+                                ></div>
+                                <div
+                                    class="absolute top-4 left-4 bg-secondary-fixed text-on-secondary px-3 py-1 font-label-caps text-label-caps"
+                                >
+                                    JUL 18
+                                </div>
+                            </div>
+                            <div class="p-stack-lg space-y-stack-sm">
+                                <h4
+                                    class="font-headline-md text-headline-md text-white uppercase"
+                                >
+                                    Night of Athletics
+                                </h4>
+                                <p class="font-body-md text-on-surface-variant">
+                                    De Veen Stadium, Heusden
+                                </p>
+                                <div class="pt-stack-md">
+                                    <button
+                                        class="w-full border border-primary text-primary py-stack-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all"
+                                        >BUY TICKETS</button
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Featured Athlete Highlight -->
+                <section
+                    class="relative bg-background py-margin-desktop overflow-hidden transition-all duration-1000 opacity-100"
+                >
+                    <!-- Diagonal Slash Background -->
+                    <div
+                        class="absolute top-0 right-0 w-1/2 h-full bg-surface-container-low skew-x-[15deg] translate-x-20 z-0"
+                    ></div>
+                    <div
+                        class="relative z-10 px-margin-mobile lg:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center"
+                    >
+                        <div class="relative group">
+                            <div
+                                class="absolute inset-0 border-[12px] border-primary/20 -translate-x-6 translate-y-6 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500"
+                            ></div>
+                            <img
+                                class="w-full aspect-[4/5] object-cover relative z-10 shadow-2xl"
+                                data-alt="High-action photo of a female sprinter, explosive start from the blocks, muscular legs, intense expression, sweat glistening, high-contrast black and white photography with electric blue neon accents on the track lines."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmjJv62pc6at2zRQPqGBpZY5HjTcXAXak1_fPQOhJ2ZguQyraXF-oszHKGAuRYLlbuCnkEO8yZPd4igdbMahbdnLNTsshm8B8x9zw-JTYZA5cCbziyUKKEje_ENFWL0ygOb_8P8Fqlz1pS0-cs5m4vcHzTMeScNXgVlPIGxbk9GFKzwtIwespACI094SKttEV2CE89oKFIxh2vodkZV3wws6_cNJXg8zFSzydMMhfswV6w1Gm_G7PvuA"
+                            />
+                            <div
+                                class="absolute -bottom-6 -right-6 bg-secondary-fixed p-stack-lg z-20"
+                            >
+                                <p
+                                    class="font-stats-number text-display-xl text-on-secondary italic leading-none"
+                                >
+                                    10.49
+                                </p>
+                                <p
+                                    class="font-label-caps text-label-caps text-on-secondary uppercase"
+                                >
+                                    WORLD RECORD TARGET
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-stack-lg lg:pl-12">
+                            <div class="space-y-stack-sm">
+                                <h4
+                                    class="font-label-caps text-label-caps text-primary uppercase tracking-[0.2em]"
+                                >
+                                    ATHLETE OF THE MONTH
+                                </h4>
+                                <h2
+                                    class="font-display-xl text-display-xl text-white italic uppercase leading-[0.8]"
+                                >
+                                    ELENA<br />VANCE
+                                </h2>
+                            </div>
+                            <div class="grid grid-cols-2 gap-gutter">
+                                <div class="border-l-2 border-primary pl-4">
+                                    <p
+                                        class="font-stats-number text-stats-number text-white"
+                                    >
+                                        10.54s
+                                    </p>
+                                    <p
+                                        class="font-label-caps text-label-caps text-on-surface-variant"
+                                    >
+                                        100M BEST
+                                    </p>
+                                </div>
+                                <div class="border-l-2 border-primary pl-4">
+                                    <p
+                                        class="font-stats-number text-stats-number text-white"
+                                    >
+                                        21.81s
+                                    </p>
+                                    <p
+                                        class="font-label-caps text-label-caps text-on-surface-variant"
+                                    >
+                                        200M BEST
+                                    </p>
+                                </div>
+                            </div>
+                            <p
+                                class="font-body-lg text-body-lg text-on-surface-variant"
+                            >
+                                Vance is redefining what’s possible on the
+                                track. With an explosive start that defies
+                                physics and a top-end speed that leaves
+                                champions in the dust, she is the clear favorite
+                                for the upcoming Diamond League finals.
+                            </p>
+                            <button
+                                class="bg-white text-background px-12 py-4 font-label-caps text-label-caps uppercase hover:bg-primary transition-colors"
+                                >Full Profile</button
+                            >
+                        </div>
+                    </div>
+                </section>
+                <!-- News & Media Grid -->
+                <section
+                    class="py-margin-desktop px-margin-mobile lg:px-margin-desktop transition-all duration-1000 opacity-100"
+                >
+                    <div
+                        class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-stack-md"
+                    >
+                        <div>
+                            <h2
+                                class="font-headline-lg text-headline-lg text-white uppercase italic"
+                            >
+                                NEWS &amp; ANALYSIS
+                            </h2>
+                            <div class="h-1 w-24 bg-primary mt-2"></div>
+                        </div>
+                        <a
+                            class="font-label-caps text-label-caps text-primary hover:underline flex items-center gap-2 uppercase"
+                            href="#"
+                            >Explore all media <span
+                                class="material-symbols-outlined"
+                                >trending_flat</span
+                            ></a
+                        >
+                    </div>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter"
+                    >
+                        <!-- Article 1 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="relative aspect-video overflow-hidden mb-stack-md"
+                            >
+                                <img
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    data-alt="Close up of spiked track shoes on a blue rubber track, macro photography, shallow depth of field, dawn light hitting the spikes."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuApg4FhZc1V99EIQiB9O7lcebyCOtIXABsS5I6X2Ist4acJLnuunOA6CwsYuVX8vwMCS_JLKmt5DjzAXjtpPT6g-uwAZU6-R93CE6c2u58Mq9fzZfdMgKRnTZLjwZsN9n-5P9c8hPcz3AKdq_Ys1zk1sI0k-_KEllWL-wwP8CnszgZvTFrFVYCSOPrEroM2Us4n2rsT5lSe_QcndsRkpDdMpciVk1NCkx6jpiodzhtMAELpUFJ2yR4rWw"
+                                />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"
+                                ></div>
+                                <div
+                                    class="absolute bottom-4 left-4 font-label-caps text-[10px] bg-primary text-on-primary px-2 py-1"
+                                >
+                                    TECH ANALYSIS
+                                </div>
+                            </div>
+                            <h3
+                                class="font-headline-md text-headline-md text-white uppercase group-hover:text-primary transition-colors"
+                            >
+                                The Engineering Behind the New Spike Record
+                            </h3>
+                            <p
+                                class="font-body-md text-on-surface-variant mt-2 line-clamp-2"
+                            >
+                                How carbon fiber plating is changing the
+                                vertical force distribution for elite sprinters.
+                            </p>
+                        </div>
+                        <!-- Article 2 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="relative aspect-video overflow-hidden mb-stack-md"
+                            >
+                                <img
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    data-alt="Wide shot of a crowded athletic stadium at night, thousands of phone flashes lit up like stars, electric atmosphere."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtb7cC1LirLnZ01nKYvITZx3_Ydgc4Kti7ZCfdEzNyZogAUxQvTXSdCSD5oZieIJ8YvCyR7Xoi-431RZDcPgToUCWqU8mt0d3yD6-7t989_FbfBv6KQFLbcmgbZRhx0bxCggoxLLShIXqJlbxDuT6-oo4b3yawZ2PhXTHGxoB8stCuGnmd5B_LvB2nDJTJ6-zzSfro1Ud8zu5TQejKalqfEsyUGa3rBPslq3vv_3g7XcZOXhnmuJLMqw"
+                                />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"
+                                ></div>
+                                <div
+                                    class="absolute bottom-4 left-4 font-label-caps text-[10px] bg-secondary-fixed text-on-secondary px-2 py-1"
+                                >
+                                    LEAGUE NEWS
+                                </div>
+                            </div>
+                            <h3
+                                class="font-headline-md text-headline-md text-white uppercase group-hover:text-primary transition-colors"
+                            >
+                                Global Finals Venue Announced
+                            </h3>
+                            <p
+                                class="font-body-md text-on-surface-variant mt-2 line-clamp-2"
+                            >
+                                The Athletics League moves to Zurich for the
+                                2024 season finale under the lights.
+                            </p>
+                        </div>
+                        <!-- Article 3 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="relative aspect-video overflow-hidden mb-stack-md"
+                            >
+                                <img
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    data-alt="Athlete submerged in an ice bath, focused expression, recovery tech visible, dramatic lighting."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5VUdTdKGeZ1mm0p94h-Mlya8eONM5I9rIfc-puFRNh4zT5EFn2vwP1zlVJS-CaLX9Bri47TDbc1ONxsLXHUIb2eujU3PT5sboSsBfq4YW7ZZtk_k2ZqW4ataZw_0bZXi58ESlmkUQ16or6iA9HHp9lTXP4VN1KgVjn3malikQUoizGbeUr-fQ8BRSZUqFlXUHP-RPq3fhAZF7wsQztk7w1JJE7sy5FFaO7L4wDNUawn7lteT7w20Zkg"
+                                />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"
+                                ></div>
+                                <div
+                                    class="absolute bottom-4 left-4 font-label-caps text-[10px] bg-primary text-on-primary px-2 py-1"
+                                >
+                                    RECOVERY
+                                </div>
+                            </div>
+                            <h3
+                                class="font-headline-md text-headline-md text-white uppercase group-hover:text-primary transition-colors"
+                            >
+                                Peak Performance: The Recovery Protocol
+                            </h3>
+                            <p
+                                class="font-body-md text-on-surface-variant mt-2 line-clamp-2"
+                            >
+                                Inside the hyperbaric chambers and cryo-tech
+                                used by the world's fastest humans.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- CTA Banner -->
+                <section
+                    class="mx-margin-mobile lg:mx-margin-desktop my-margin-desktop relative overflow-hidden transition-all duration-1000 opacity-100"
+                >
+                    <div
+                        class="bg-primary px-stack-lg py-20 flex flex-col items-center text-center relative z-10"
+                    >
+                        <div class="absolute top-0 right-0 opacity-10">
+                            <span
+                                class="material-symbols-outlined text-[300px] text-on-primary -rotate-12 translate-x-20"
+                                >bolt</span
+                            >
+                        </div>
+                        <h2
+                            class="font-display-xl text-display-xl text-on-primary italic uppercase max-w-2xl mb-stack-lg"
+                        >
+                            STAY IN THE SLIPSTREAM
+                        </h2>
+                        <p
+                            class="font-body-lg text-on-primary-container max-w-xl mb-stack-lg"
+                        >
+                            Join 500,000+ fans for exclusive access to race
+                            highlights, athlete interviews, and priority
+                            ticketing.
+                        </p>
+                        <div
+                            class="flex flex-col sm:flex-row gap-stack-md w-full max-w-md"
+                        >
+                            <input
+                                class="flex-grow bg-white/20 border-b-2 border-on-primary-container p-4 font-label-caps text-on-primary placeholder:text-on-primary-container/60 focus:bg-white/30 outline-none"
+                                placeholder="ENTER YOUR EMAIL"
+                                type="email"
+                            />
+                            <button
+                                class="bg-on-primary text-primary font-label-caps text-label-caps px-8 py-4 hover:scale-105 transition-transform"
+                                >SUBSCRIBE</button
+                            >
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <script>
+                // Simple intersection observer for subtle fade-in reveals
+                document.addEventListener("DOMContentLoaded", () => {
+                    const observerOptions = {
+                        threshold: 0.1,
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("opacity-100");
+                                entry.target.classList.remove(
+                                    "opacity-0",
+                                    "translate-y-10",
+                                );
+                            }
+                        });
+                    }, observerOptions);
+
+                    document.querySelectorAll("section").forEach((section) => {
+                        section.classList.add(
+                            "transition-all",
+                            "duration-1000",
+                            "opacity-0",
+                            "translate-y-10",
+                        );
+                        observer.observe(section);
+                    });
+                });
+            </script>
+        </main>
+        <footer
+            class="w-full bg-surface-container-lowest border-t border-white/5 pt-stack-lg pb-margin-mobile"
+        >
+            <div
+                class="w-full px-margin-mobile lg:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter"
+            >
+                <div class="space-y-stack-md">
+                    <div class="flex items-center gap-4">
+                        <img
+                            alt="Athletics League Logo"
+                            class="h-6 w-auto object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoFHvz0pY1SeSg_3GXUC0j0WiU2YuchDdDvw5nHfGWZfTR21xQE9IqN6bUFX3cfwpKqRtQ2n7ZJlfRn0XJFW6tPSGppPijosjNL5fKLJhVNgwQwRARvZPMKr4KJehWjD81075L_D27iJT3-N7HbWD5hxaTurBTg0kfTmM7Bhvbqp1Q0WRrr7efpsD2drT5fAnJ0Xhi9Vl49wH7rw3POLGoeafxQBhAOmD3IQ6fmgLB7I4XuvZeSYmeoA"
+                        /><span
+                            class="font-headline-md text-headline-md text-on-surface"
+                            >AL</span
+                        >
+                    </div>
+                    <p class="text-on-surface-variant font-body-md max-w-xs">
+                        The elite standard of global athletics. Velocity,
+                        precision, and peak performance.
+                    </p>
+                    <div class="flex gap-stack-md">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer"
+                            >share</span
+                        ><span
+                            class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer"
+                            >public</span
+                        ><span
+                            class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer"
+                            >podcasts</span
+                        >
+                    </div>
+                </div>
+                <div class="space-y-stack-md">
+                    <h4 class="font-label-caps text-label-caps text-primary">
+                        LEAGUE PARTNERS
+                    </h4>
+                    <div class="grid grid-cols-2 gap-stack-sm">
+                        <span class="text-on-surface-variant font-body-md"
+                            >Apex Performance</span
+                        ><span class="text-on-surface-variant font-body-md"
+                            >Zenith Gear</span
+                        ><span class="text-on-surface-variant font-body-md"
+                            >Nova Hydration</span
+                        ><span class="text-on-surface-variant font-body-md"
+                            >Core Metrics</span
+                        >
+                    </div>
+                </div>
+                <div class="space-y-stack-md">
+                    <h4 class="font-label-caps text-label-caps text-primary">
+                        NEWSLETTER
+                    </h4>
+                    <div class="flex gap-0">
+                        <input
+                            class="bg-surface-container-high border-b-2 border-outline-variant px-stack-md py-stack-sm w-full focus:border-primary outline-none text-on-surface"
+                            placeholder="Email address"
+                            type="email"
+                        /><button class="bg-primary px-stack-md py-stack-sm"
+                            ><span
+                                class="material-symbols-outlined text-on-primary"
+                                >arrow_forward</span
+                            ></button
+                        >
+                    </div>
+                    <p
+                        class="text-[10px] text-on-tertiary-fixed-variant uppercase tracking-widest"
+                    >
+                        Join 50k+ elite fans
+                    </p>
+                </div>
+            </div>
+            <div
+                class="w-full px-margin-mobile lg:px-margin-desktop mt-stack-lg pt-stack-md border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-stack-sm text-[12px] text-on-tertiary-fixed-variant"
+            >
+                <p class="">© 2024 ATHLETICS LEAGUE. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-stack-md">
+                    <a class="hover:text-on-surface transition-colors" href="#"
+                        >PRIVACY</a
+                    ><a class="hover:text-on-surface transition-colors" href="#"
+                        >TERMS</a
+                    ><a class="hover:text-on-surface transition-colors" href="#"
+                        >COOKIES</a
+                    >
+                </div>
+            </div>
+        </footer>
+    </body></html
+>

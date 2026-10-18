@@ -1,0 +1,45 @@
+{
+	"name": "v-league",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^7.0.1",
+		"@sveltejs/adapter-netlify": "^6.0.4",
+		"@sveltejs/kit": "^2.63.0",
+		"@sveltejs/package": "^2.5.8",
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"@types/node": "^26.2.0",
+		"publint": "^0.3.21",
+		"svelte": "^5.56.1",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.0.16"
+	},
+	"keywords": [
+		"svelte"
+	],
+	"dependencies": {
+		"@supabase/supabase-js": "^2.110.7",
+		"@tailwindcss/vite": "^4.3.3",
+		"marked": "^16.4.2",
+		"tailwindcss": "^4.3.3"
+	},
+	"allowScripts": {
+		"tailwindcss@4.3.3": true,
+		"@tailwindcss/vite@4.3.3": true,
+		"esbuild@0.25.12": true
+	}
+}

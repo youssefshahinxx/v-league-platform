@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700&family=Space+Grotesk:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  --color-on-primary-container: #FAFF81;
+  --color-surface-container: #1d2021;
+  --color-tertiary-fixed-dim: #c9c6c5;
+  --color-tertiary: #ff0000;
+  --color-surface-variant: #323536;
+  --color-on-primary-fixed: #001a41;
+  --color-on-secondary-container: #556d00;
+  --color-primary: #FF5A5F;
+  --color-on-tertiary-fixed: #1c1b1b;
+  --color-surface-container-highest: #323536;
+  --color-surface-container-high: #282a2b;
+  --color-surface-container-low: #191c1d;
+  --color-inverse-surface: #e1e3e4;
+  --color-primary-container: #4a8eff;
+  --color-on-secondary: #283500;
+  --color-on-error-container: #ffdad6;
+  --color-tertiary-fixed: #e5e2e1;
+  --color-inverse-primary: #005bc0;
+  --color-outline: #8b90a0;
+  --color-secondary-fixed-dim: #abd600;
+  --color-background: #111415;
+  --color-on-surface: #EC5A5A;
+  --color-on-primary: #FDF0D5;
+  --color-primary-fixed-dim: #adc7ff;
+  --color-surface-container-lowest: #0c0f10;
+  --color-on-error: #690005;
+  --color-surface-bright: #373a3b;
+  --color-secondary-fixed: #FDF0D5;
+  --color-on-secondary-fixed: #161e00;
+  --color-outline-variant: #414754;
+  --color-surface-tint: #adc7ff;
+  --color-primary-fixed: #d8e2ff;
+  --color-on-primary-fixed-variant: #004493;
+  --color-error-container: #93000a;
+  --color-on-tertiary-container: #2a2a29;
+  --color-surface: #111415;
+  --color-tertiary-container: #929090;
+  --color-error: #ffb4ab;
+  --color-on-secondary-fixed-variant: #3c4d00;
+  --color-on-tertiary-fixed-variant: #474646;
+  --color-on-surface-variant: #c1c6d7;
+  --color-on-background: #e1e3e4;
+  --color-surface-dim: #111415;
+  --color-secondary-container: #c3f400;
+  --color-on-tertiary: #313030;
+  --color-inverse-on-surface: #2e3132;
+
+  --font-body-lg: 'Inter', sans-serif;
+  --font-body-md: 'Inter', sans-serif;
+  --font-label-caps: 'Space Grotesk', sans-serif;
+  --font-headline-lg: 'Anton', sans-serif;
+  --font-stats-number: 'Anton', sans-serif;
+  --font-display-xl: 'Anton', sans-serif;
+  --font-headline-lg-mobile: 'Anton', sans-serif;
+  --font-headline-md: 'Anton', sans-serif;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.1em;
+  --text-label-caps--font-weight: 700;
+  --text-headline-lg: 48px;
+  --text-headline-lg--line-height: 48px;
+  --text-headline-lg--letter-spacing: 0.02em;
+  --text-stats-number: 32px;
+  --text-stats-number--line-height: 32px;
+  --text-display-xl: 80px;
+  --text-display-xl--line-height: 80px;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-headline-lg-mobile: 32px;
+  --text-headline-lg-mobile--line-height: 32px;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--letter-spacing: 0.05em;
+
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  --spacing-gutter: 24px;
+  --spacing-stack-lg: 40px;
+  --spacing-stack-sm: 8px;
+  --spacing-margin-mobile: 20px;
+  --spacing-margin-desktop: 64px;
+  --spacing-unit: 4px;
+  --spacing-stack-md: 16px;
+}
+
+@layer base {
+    body {
+        margin: 0;
+        padding: 0;
+        overscroll-behavior: none;
+        background-color: var(--color-background);
+        color: var(--color-on-surface);
+    }
+    main > :first-child {
+        margin-top: 0 !important;
+    }
+    main > :last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Give every table column generous horizontal breathing room. */
+table th,
+table td {
+    padding-left: var(--spacing-stack-md);
+    padding-right: var(--spacing-stack-md);
+}
+
+/* Scale every design-token font size down on small screens. */
+@media (max-width: 639.98px) {
+    :root {
+        --text-body-lg: 15px;
+        --text-body-lg--line-height: 22px;
+        --text-body-md: 14px;
+        --text-body-md--line-height: 20px;
+        --text-label-caps: 10px;
+        --text-label-caps--line-height: 14px;
+        --text-headline-lg: 32px;
+        --text-headline-lg--line-height: 36px;
+        --text-headline-lg-mobile: 24px;
+        --text-headline-lg-mobile--line-height: 28px;
+        --text-headline-md: 18px;
+        --text-headline-md--line-height: 24px;
+        --text-stats-number: 24px;
+        --text-stats-number--line-height: 28px;
+        --text-display-xl: 52px;
+        --text-display-xl--line-height: 56px;
+    }
+}
