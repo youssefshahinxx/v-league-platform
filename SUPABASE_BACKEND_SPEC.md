@@ -1,10 +1,10 @@
 # Database Overview
 
-This project contains a PostgreSQL database dump for a Supabase-backed athletics and competition platform. It includes the core system tables, user authentication, real-time messaging, file storage, and the business logic for managing competitions, athletes, score tracking, and rankings.
+This project contains a PostgreSQL database for a Supabase-backed athletics and competition platform. It includes the core system tables, user authentication, real-time messaging, file storage, and the business logic for managing competitions, athletes, score tracking, and rankings.
 
 ## 1. Database Type
 
-- PostgreSQL cluster dump
+- PostgreSQL 
 - Built for Supabase environment
 - Includes standard Supabase schemas and extension support
 - Designed for a sports/athletics league application
@@ -156,7 +156,187 @@ The dump includes:
   - supabase_vault
 - standard PostgreSQL security and schema setup for Supabase deployments
 
-## 7. Simplified Schema Summary
+## 7. Database Schema Diagrams
+
+### 7.1 Core Athletics Domain
+
+```mermaid
+erDiagram
+    profiles ||--o{ registrations : registers_for
+    profiles ||--o{ event_results : has_result
+    profiles ||--o{ points_ledger : earns_points
+    profiles ||--o{ payments : makes
+
+    competitions ||--o{ competition_events : contains
+    competitions ||--o{ registrations : accepts
+    competitions ||--o{ payments : includes
+
+    events ||--o{ competition_events : defines
+    competition_events ||--o{ event_results : produces
+    event_results ||--o{ event_attempts : has_attempts
+
+    scoring_systems ||--o{ scoring_rules : defines_ranking
+    scoring_systems ||--o{ scoring_bonus_rules : defines_bonus
+
+    profiles {
+        uuid id
+        text full_name
+        text club
+        date dob
+    }
+
+    competitions {
+        uuid id
+        text title
+        text location
+        timestamp event_date
+    }
+
+    events {
+        uuid id
+        text name
+        text event_type
+        text measurement_type
+    }
+
+    competition_events {
+        uuid id
+        uuid competition_id
+        uuid event_id
+        text gender
+        text status
+    }
+
+    registrations {
+        uuid id
+        uuid profile_id
+        uuid competition_id
+        text payment_status
+    }
+
+    event_results {
+        uuid id
+        uuid competition_event_id
+        uuid profile_id
+        numeric performance
+        integer official_rank
+        text status
+    }
+
+    event_attempts {
+        uuid id
+        uuid event_result_id
+        smallint attempt_number
+        numeric performance
+    }
+
+    points_ledger {
+        uuid id
+        uuid profile_id
+        uuid competition_event_id
+        uuid event_result_id
+        text transaction_type
+        integer points
+    }
+
+    scoring_systems {
+        uuid id
+        text name
+        boolean active
+    }
+
+    scoring_rules {
+        uuid id
+        uuid scoring_system_id
+        integer finishing_position
+        integer points
+    }
+
+    scoring_bonus_rules {
+        uuid id
+        uuid scoring_system_id
+        text code
+        integer points
+    }
+
+    payments {
+        uuid order_id
+        uuid profile_id
+        uuid competition_id
+        text status
+        bigint amount_cents
+    }
+```
+
+### 7.2 Authentication and System Schema
+
+```mermaid
+erDiagram
+    auth_users ||--o{ auth_identities : has
+    auth_users ||--o{ auth_sessions : owns
+    auth_users ||--o{ auth_refresh_tokens : issues
+    auth_users ||--o{ public_profiles : maps_to
+
+    auth_users {
+        uuid id
+        text email
+        boolean email_confirmed
+        timestamp created_at
+    }
+
+    auth_identities {
+        uuid id
+        uuid user_id
+        text provider
+        jsonb identity_data
+    }
+
+    auth_sessions {
+        uuid id
+        uuid user_id
+        timestamp created_at
+        timestamp not_after
+    }
+
+    auth_refresh_tokens {
+        bigint id
+        uuid user_id
+        text token
+        timestamp created_at
+    }
+
+    public_profiles {
+        uuid id
+        text full_name
+        text club
+        text nationality
+    }
+```
+
+### 7.3 High-Level Architecture View
+
+```mermaid
+flowchart LR
+    A[Web App / Frontend] --> B[Supabase Auth]
+    A --> C[Public App Schema]
+    A --> D[Storage Buckets]
+    A --> E[Realtime Subscriptions]
+
+    B --> F[auth.users]
+    C --> G[profiles]
+    C --> H[competitions]
+    C --> I[event_results]
+    C --> J[points_ledger]
+    C --> K[leaderboard materialized views]
+
+    D --> L[avatars]
+    D --> M[certificates]
+    D --> N[competition media]
+
+    E --> O[subscription and messages]
+```
+
+## 8. Simplified Schema Summary
 
 | Schema | Purpose |
 | --- | --- |
